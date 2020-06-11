@@ -1,0 +1,43 @@
+<%- include("../../partials/header", {loggedIn : true}) %>
+
+<div class="container">
+	<table class="table mt-5 table-hover table-active">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Id No.</th>
+				<th scope="col">Name</th>
+				<th scope="col">Date</th>
+				<th scope="col">Check In</th>
+				<th scope="col">Check Out</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@mdo</td>
+				<td>@mdo</td>
+			</tr>
+			<tr>
+				<th scope="row">2</th>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>@fat</td>
+				<td>@fat</td>
+			</tr>
+			<tr>
+				<th scope="row">3</th>
+				<td>Larry</td>
+				<td>the Bird</td>
+				<td>@twitter</td>
+				<td>@twitter</td>
+			</tr>
+		</tbody>
+	</table>
+	<div style="display: flex; justify-content: flex-end;">
+		<a href="/user" class="btn btn-info mr-3">Go Back</a>
+		<a href="/user/dom_help/new" class="btn btn-success">Register New Domestic Help</a>
+	</div>
+</div>
+<%- include("../../partials/footer") %>

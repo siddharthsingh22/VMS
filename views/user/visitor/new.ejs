@@ -1,0 +1,36 @@
+<%- include("../../partials/header", {loggedIn : true}) %>
+<div class="container">
+	<div class="row" style="display: flex; justify-content: center;">
+		<div class="col-md-4">
+			<div class="p-3 pb-4 mt-5" style="border: 1px solid rgba(0, 0, 0, 0.1); background-color: #e4e4e4;">
+				<h1 class="display-5 mb-4 text-center" style="font-weight: 100; font-size: 2.2rem;">Request New Visitor</h1>
+				<form action="/reset" method="POST" style="width: 100%;">
+					<div class="form-group">
+						<input type="text" name="reset[email]" placeholder="Visitor Aadhar Id" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<input type="text" name="reset[email]" placeholder="Visitor Name" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<input type="text" name="reset[email]" placeholder="Purpose of Visit" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label for="arrival-time" class="ml-1 mb-0">Expected Arrival Time:</label>
+						<input type="datetime-local" id="arrival-time" name="meeting-time" value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label for="departure-time" class="ml-1 mb-0">Expected Departure Time:</label>
+						<input type="datetime-local" id="departure-time" name="meeting-time" value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00" class="form-control" required />
+					</div>
+
+					<button type="submit" class="btn btn-block btn-success">
+						Register
+					</button>
+					<a href="/user/visitor" class="btn btn-block btn-info">Go Back</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- include("../../partials/footer") %>
