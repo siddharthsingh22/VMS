@@ -1,0 +1,11 @@
+{
+  "name": "vms",
+  "version": "1.0.0",
+  "description": "Visitor Management System for Shantigram Township",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Siddharth Pratap Singh",
+  "license": "ISC"
+}
