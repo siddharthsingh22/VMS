@@ -3,6 +3,8 @@ var express = require("express"),
 	mongoose = require("mongoose"),
 	session = require("express-session"),
 	bcrypt = require("bcryptjs"),
+	jwt = require("jsonwebtoken"),
+	nodemailer = require("nodemailer"),
 	MongoStore = require("connect-mongo")(session),
 	Residents = require("../models/resident");
 
@@ -102,7 +104,7 @@ router.post("/user/login", redirectUser, function (req, res) {
 		});
 });
 
-router.post("/user/register", function (req, res) {
+router.post("/user/register", redirectUser, function (req, res) {
 	if (req.body.register.password === req.body.register.confirmPassword) {
 		bcrypt
 			.genSalt(10)
@@ -116,12 +118,12 @@ router.post("/user/register", function (req, res) {
 					phoneNo: req.body.register.phoneNo,
 					password: hash,
 				})
-
 					.then((returnedUserFromDb) => {
-						console.log("New user created");
+						console.log("New User Created");
 						res.render("./user/login", { success: "Account Created !! Login Now", error: "" });
 					})
 					.catch((err) => {
+						console.log("Email already registered" + err);
 						res.render("./user/register", { error: "Email already registered" });
 					});
 			})
@@ -130,6 +132,91 @@ router.post("/user/register", function (req, res) {
 			});
 	} else {
 		res.render("./user/register", { error: "Both passwords must match" });
+	}
+});
+
+router.get("/user/reset", redirectUser, function (req, res) {
+	res.render("./user/reset");
+});
+
+router.post("/user/reset", redirectUser, function (req, res) {
+	Residents.findOne({ email: req.body.reset.email })
+		.then((returnedUserFromDb) => {
+			const secret = returnedUserFromDb.password;
+			const userId = returnedUserFromDb.email;
+			const token = jwt.sign({ userId }, secret, {
+				expiresIn: 3600,
+			});
+			const transporter = nodemailer.createTransport({
+				host: "smtp.mailtrap.io",
+				port: 2525,
+				auth: {
+					user: "0c92b23b4dfecd",
+					pass: "bf00df94b9ec83",
+				},
+			});
+
+			const mailOptions = {
+				from: "admin@vms.org",
+				to: `${returnedUserFromDb.email}`,
+				subject: "Password reset link",
+				text: "",
+				html: `Hey ${returnedUserFromDb.name} !!<br><br> <button><a href="localhost:3000/user/reset/${returnedUserFromDb.email}/${token}">Click Here to reset your password</a></button><br><br>This is one time use link and is valid only for 1 hour.`,
+			};
+
+			transporter
+				.sendMail(mailOptions)
+				.then((info) => {
+					console.log("Email Sent " + info.response);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			res.render("./user/login", { success: "Reset link has been sent to your email!", error: "" });
+		})
+
+		.catch((err) => {
+			console.log("Email is not registered" + err);
+			res.render("./user/register", { error: "This email is not registered" });
+		});
+});
+
+router.get("/user/reset/:id/:token", function (req, res) {
+	Residents.findOne({ email: req.params.id })
+		.then((returnedUserFromDb) => {
+			jwt.verify(req.params.token, returnedUserFromDb.password, function (err, decoded) {
+				if (err) {
+					console.log(err);
+				} else {
+					res.render("./user/reset-new", { email: returnedUserFromDb.email, error: "" });
+				}
+			});
+		})
+		.catch(() => {
+			res.render("./user/login", { error: "Please try again", success: "" });
+		});
+});
+
+router.post("/user/reset-new/:id", function (req, res) {
+	if (req.body.reset.password === req.body.reset.confirmPassword) {
+		bcrypt
+			.genSalt(10)
+			.then((salt) => {
+				console.log(req.params.id);
+				return bcrypt.hash(req.body.reset.password, salt);
+			})
+			.then((hash) => {
+				return Residents.findOneAndUpdate({ email: req.params.id }, { password: hash }, { useFindAndModify: false });
+			})
+			.then((returnedUserFromDb) => {
+				res.render("./user/login", { success: "Password Updated !! Login Now", error: "" });
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	} else {
+		console.log("Password Same !! Aborting");
+		res.render("./user/reset-new", { email: req.params.id, error: "Both passwords must match" });
 	}
 });
 
