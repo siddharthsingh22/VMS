@@ -225,4 +225,8 @@ router.get("/user/logout", function (req, res) {
 	res.redirect("/user/login");
 });
 
+router.get("*", redirectLogin, function (req, res) {
+	res.send("404 Page Not Found");
+});
+
 module.exports = router;
