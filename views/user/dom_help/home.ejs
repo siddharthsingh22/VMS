@@ -4,21 +4,26 @@
 	<table class="table mt-5 table-hover table-active">
 		<thead class="thead-dark">
 			<tr>
-				<th scope="col">Id No.</th>
-				<th scope="col">Name</th>
-				<th scope="col">Date</th>
-				<th scope="col">Check In</th>
-				<th scope="col">Check Out</th>
+				<th scope="col" style="width: 17%; padding-left: 4%;">Id No.</th>
+				<th scope="col" style="width: 17%;">Name</th>
+				<th scope="col" style="width: 17%;">Date</th>
+				<th scope="col" style="width: 17%;">Check In</th>
+				<th scope="col" style="width: 16%;">Check Out</th>
+				<th scope="col" style="width: 13%;">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% regDom_HelpArray.forEach((eachRegDom_HelpId) => { %> <% returnedDom_HelpDataFromDb.forEach((eachDom_HelpData) => { %> <% if(eachDom_HelpData.id === eachRegDom_HelpId){ %>
 			<tr>
-				<th scope="row"><%= eachDom_HelpData.id %></th>
+				<th scope="row" style="padding-left: 4%;"><%= eachDom_HelpData.id %></th>
 				<td><%= eachDom_HelpData.name %></td>
 				<td><%= eachDom_HelpData.timeStamps[0].date %></td>
 				<td><%= eachDom_HelpData.timeStamps[0].checkIn %></td>
 				<td><%= eachDom_HelpData.timeStamps[0].checkOut %></td>
+				<td>
+					<a href="/user/dom_help/show/<%= eachDom_HelpData.id %>" class="text-dark"><i class="fas fa-info-circle mr-3"></i></a>
+					<a href="/user/dom_help/delete/<%= eachDom_HelpData.id %>" class="text-dark"><i class="fas fa-trash-alt"></i></a>
+				</td>
 			</tr>
 			<% } %> <% }) %> <% }) %>
 		</tbody>

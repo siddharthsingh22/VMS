@@ -58,10 +58,8 @@ router.get("/user", redirectLogin, function (req, res) {
 router.get("/user/dom_help", redirectLogin, function (req, res) {
 	Dom_helps.find()
 		.then((returnedDom_HelpDataFromDb) => {
-			// console.log(returnedDom_HelpDataFromDb);
 			Residents.findOne({ email: req.session.userEmail })
 				.then((returnedResidentDataFromDb) => {
-					console.log(returnedResidentDataFromDb);
 					res.render("./user/dom_help/home", { returnedDom_HelpDataFromDb: returnedDom_HelpDataFromDb, regDom_HelpArray: returnedResidentDataFromDb.regDom_Help });
 				})
 				.catch((err) => {
@@ -73,8 +71,56 @@ router.get("/user/dom_help", redirectLogin, function (req, res) {
 		});
 });
 
+router.get("/user/dom_help/show/:id", redirectLogin, function (req, res) {
+	Dom_helps.findOne({ id: req.params.id })
+		.then((returnedDom_HelpDataFromDb) => {
+			res.render("./user/dom_help/show", { returnedDom_HelpDataFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
 router.get("/user/dom_help/new", redirectLogin, function (req, res) {
 	res.render("./user/dom_help/new");
+});
+
+router.post("/user/dom_help/new", redirectLogin, function (req, res) {
+	Residents.findOne({ email: req.session.userEmail })
+		.then((returnedResidentDataFromDb) => {
+			returnedResidentDataFromDb.regDom_Help.push(parseInt(req.body.id));
+			return returnedResidentDataFromDb.save();
+		})
+		.then((savedData) => {
+			console.log("updated the dom_help list");
+			console.log(savedData);
+			res.redirect("/user/dom_help");
+		})
+		.catch((err) => {
+			console.log(err);
+			res.redirect("/user/dom_help/new");
+		});
+});
+
+router.get("/user/dom_help/delete/:id", function (req, res) {
+	Residents.findOne({ email: req.session.userEmail })
+		.then((returnedUserFromDb) => {
+			returnedUserFromDb.regDom_Help.forEach((eachRegId) => {
+				if (eachRegId === parseInt(req.params.id)) {
+					// req.params.id is string and not a number
+					const index = returnedUserFromDb.regDom_Help.indexOf(eachRegId);
+					returnedUserFromDb.regDom_Help.splice(index, 1);
+				}
+			});
+			return returnedUserFromDb.save();
+		})
+		.then(() => {
+			console.log("updated the reg dom_help list");
+			res.redirect("/user/dom_help");
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
 
 router.get("/user/visitor", redirectLogin, function (req, res) {
