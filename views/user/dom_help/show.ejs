@@ -1,0 +1,35 @@
+<%- include("../../partials/header", {loggedIn : true}) %>
+<div class="container">
+	<div class="jumbotron mt-5" style="padding: 5vh 8vw;">
+		<div class="row">
+			<div class="col-12 col-md-9">
+				<h1 class="display-4" style="font-size: 2.5rem;">Name : <%= returnedDom_HelpDataFromDb.name %></h1>
+				<h1 class="display-4" style="font-size: 2.5rem;">Id : <%= returnedDom_HelpDataFromDb.id %></h1>
+
+				<h1 class="display-4 mt-3" style="font-size: 1.2rem;">Address : <%= returnedDom_HelpDataFromDb.address %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Phone Number : <%= returnedDom_HelpDataFromDb.phoneNo %></h1>
+				<a href="/user/dom_help" class="btn btn-success mt-2 mb-2">Go Back</a>
+			</div>
+			<img class="col-12 col-md-3 mt-2 img-fluid rounded" src="<%= returnedDom_HelpDataFromDb.image %>" alt="Domestic Help Image" style="height: 220px;" />
+		</div>
+	</div>
+	<table class="table mt-5 table-hover table-active">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" style="width: 30%; padding-left: 10%;">Date</th>
+				<th scope="col" style="width: 25%;">Check In</th>
+				<th scope="col" style="width: 15%;">Check Out</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% returnedDom_HelpDataFromDb.timeStamps.forEach((eachDayData) => { %>
+			<tr>
+				<th scope="row" style="padding-left: 10%;"><%= eachDayData.date %></th>
+				<td><%= eachDayData.checkIn %></td>
+				<td><%= eachDayData.checkOut %></td>
+			</tr>
+			<% }) %>
+		</tbody>
+	</table>
+</div>
+<%- include("../../partials/footer") %>
