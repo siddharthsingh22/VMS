@@ -12,27 +12,15 @@
 			</tr>
 		</thead>
 		<tbody>
+			<% regDom_HelpArray.forEach((eachRegDom_HelpId) => { %> <% returnedDom_HelpDataFromDb.forEach((eachDom_HelpData) => { %> <% if(eachDom_HelpData.id === eachRegDom_HelpId){ %>
 			<tr>
-				<th scope="row">1</th>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@mdo</td>
-				<td>@mdo</td>
+				<th scope="row"><%= eachDom_HelpData.id %></th>
+				<td><%= eachDom_HelpData.name %></td>
+				<td><%= eachDom_HelpData.timeStamps[0].date %></td>
+				<td><%= eachDom_HelpData.timeStamps[0].checkIn %></td>
+				<td><%= eachDom_HelpData.timeStamps[0].checkOut %></td>
 			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>Jacob</td>
-				<td>Thornton</td>
-				<td>@fat</td>
-				<td>@fat</td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td>Larry</td>
-				<td>the Bird</td>
-				<td>@twitter</td>
-				<td>@twitter</td>
-			</tr>
+			<% } %> <% }) %> <% }) %>
 		</tbody>
 	</table>
 	<div style="display: flex; justify-content: flex-end;">

@@ -5,6 +5,7 @@ const residentSchema = new mongoose.Schema({
 	email: { type: String, unique: true, required: true },
 	phoneNo: { type: Number, required: true },
 	password: { type: String, required: true },
+	regDom_Help: { type: Array },
 });
 
 const Residents = mongoose.model("resident", residentSchema);

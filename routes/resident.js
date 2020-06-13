@@ -6,6 +6,7 @@ var express = require("express"),
 	jwt = require("jsonwebtoken"),
 	nodemailer = require("nodemailer"),
 	MongoStore = require("connect-mongo")(session),
+	Dom_helps = require("../models/dom_help"),
 	Residents = require("../models/resident");
 
 router.use(
@@ -18,7 +19,7 @@ router.use(
 		rolling: true,
 		cookie: {
 			sameSite: true, // only same site cookie would be allowed
-			maxAge: 1000 * 20, // does not allow to use .env variables ???
+			maxAge: 1000 * 60 * 20, // does not allow to use .env variables ???
 			// secure: true,
 		},
 	})
@@ -55,7 +56,21 @@ router.get("/user", redirectLogin, function (req, res) {
 });
 
 router.get("/user/dom_help", redirectLogin, function (req, res) {
-	res.render("./user/dom_help/home");
+	Dom_helps.find()
+		.then((returnedDom_HelpDataFromDb) => {
+			// console.log(returnedDom_HelpDataFromDb);
+			Residents.findOne({ email: req.session.userEmail })
+				.then((returnedResidentDataFromDb) => {
+					console.log(returnedResidentDataFromDb);
+					res.render("./user/dom_help/home", { returnedDom_HelpDataFromDb: returnedDom_HelpDataFromDb, regDom_HelpArray: returnedResidentDataFromDb.regDom_Help });
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
 
 router.get("/user/dom_help/new", redirectLogin, function (req, res) {
@@ -90,6 +105,7 @@ router.post("/user/login", redirectUser, function (req, res) {
 				.then((resHash) => {
 					if (resHash) {
 						req.session.userId = returnedUserFromDb._id;
+						req.session.userEmail = returnedUserFromDb.email;
 						res.redirect("/user");
 					} else {
 						res.render("./user/login", { error: "Incorrect Password", success: "" });
