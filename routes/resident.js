@@ -7,6 +7,7 @@ var express = require("express"),
 	nodemailer = require("nodemailer"),
 	MongoStore = require("connect-mongo")(session),
 	Dom_helps = require("../models/dom_help"),
+	Visitors = require("../models/visitor"),
 	Residents = require("../models/resident");
 
 router.use(
@@ -92,8 +93,6 @@ router.post("/user/dom_help/new", redirectLogin, function (req, res) {
 			return returnedResidentDataFromDb.save();
 		})
 		.then((savedData) => {
-			console.log("updated the dom_help list");
-			console.log(savedData);
 			res.redirect("/user/dom_help");
 		})
 		.catch((err) => {
@@ -115,20 +114,127 @@ router.get("/user/dom_help/delete/:id", function (req, res) {
 			return returnedUserFromDb.save();
 		})
 		.then(() => {
-			console.log("updated the reg dom_help list");
 			res.redirect("/user/dom_help");
 		})
 		.catch((err) => {
 			console.log(err);
 		});
 });
+// =======================================
+// Horribly implemented block begins
+// =======================================
+
+let dataObject = []; // pushing data into this array, after using this array is
+// getting empty using dataObject.lenth = 0
+i = 0;
 
 router.get("/user/visitor", redirectLogin, function (req, res) {
-	res.render("./user/visitor/home");
+	Residents.findOne({ email: req.session.userEmail })
+		.then((returnedResidentDataFromDb) => {
+			returnedResidentDataFromDb.visitorsArray.forEach((eachVisitorRefrence) => {
+				Visitors.findOne({ _id: eachVisitorRefrence.visitorId })
+					.then((returnedVisitorDataFromDb) => {
+						returnedVisitorDataFromDb.visitingRecordArray.forEach((eachVisitingRecord) => {
+							if (eachVisitingRecord._id == eachVisitorRefrence.visitingId) {
+								dataObject.push({
+									name: returnedVisitorDataFromDb.name,
+									aadharId: returnedVisitorDataFromDb.aadharId,
+									visitingRecord: eachVisitingRecord,
+								});
+							}
+						});
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			});
+			if (i === 0) {
+				res.redirect("/user/visitor");
+			}
+
+			if (i > 0) {
+				res.render("./user/visitor/home", { dataObject });
+				dataObject.length = 0;
+			}
+			i++;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
+
+// ==================================
+// Horribly implemented block ends
+// ==================================
 
 router.get("/user/visitor/new", redirectLogin, function (req, res) {
 	res.render("./user/visitor/new");
+});
+
+router.post("/user/visitor/new", function (req, res) {
+	Visitors.findOne({ aadharId: req.body.new.aadharId })
+		.then((returnedExistingVisitorFromDb) => {
+			const randomNumber = Math.floor(100000 + Math.random() * 900000);
+			returnedExistingVisitorFromDb.visitingRecordArray.push({
+				purpose: req.body.new.purpose,
+				expecArrival: req.body.new.expecArrivalTime,
+				expecDeparture: req.body.new.expecDepartureTime,
+				otp: randomNumber,
+			});
+			returnedExistingVisitorFromDb.save().then((updatedExistingVisitorFromDb) => {
+				Residents.findOne({ email: req.session.userEmail })
+					.then((returnedResidentDataFromDb) => {
+						const len = updatedExistingVisitorFromDb.visitingRecordArray.length;
+						returnedResidentDataFromDb.visitorsArray.push({
+							visitorId: updatedExistingVisitorFromDb._id,
+							visitingId: updatedExistingVisitorFromDb.visitingRecordArray[len - 1]._id,
+						});
+						return returnedResidentDataFromDb.save();
+					})
+					.then(() => {
+						res.redirect("/user/visitor");
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			});
+		})
+
+		.catch((err) => {
+			Visitors.create({
+				name: req.body.new.name,
+				aadharId: req.body.new.aadharId,
+			})
+				.then((returnedNewVisitorFromDb) => {
+					const randomNumber = Math.floor(100000 + Math.random() * 900000);
+					returnedNewVisitorFromDb.visitingRecordArray.push({
+						purpose: req.body.new.purpose,
+						expecArrival: req.body.new.expecArrivalTime,
+						expecDeparture: req.body.new.expecDepartureTime,
+						otp: randomNumber,
+					});
+					returnedNewVisitorFromDb.save().then(() => {
+						Residents.findOne({ email: req.session.userEmail })
+							.then((returnedResidentDataFromDb) => {
+								const len = returnedNewVisitorFromDb.visitingRecordArray.length;
+								returnedResidentDataFromDb.visitorsArray.push({
+									visitorId: returnedNewVisitorFromDb._id,
+									visitingId: returnedNewVisitorFromDb.visitingRecordArray[len - 1]._id,
+								});
+								return returnedResidentDataFromDb.save();
+							})
+							.then(() => {
+								res.redirect("/user/visitor");
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					});
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		});
 });
 
 // =======================
@@ -185,7 +291,6 @@ router.post("/user/register", redirectUser, function (req, res) {
 						res.render("./user/login", { success: "Account Created !! Login Now", error: "" });
 					})
 					.catch((err) => {
-						console.log("Email already registered" + err);
 						res.render("./user/register", { error: "Email already registered" });
 					});
 			})
@@ -238,7 +343,6 @@ router.post("/user/reset", redirectUser, function (req, res) {
 		})
 
 		.catch((err) => {
-			console.log("Email is not registered" + err);
 			res.render("./user/register", { error: "This email is not registered" });
 		});
 });
@@ -264,7 +368,6 @@ router.post("/user/reset-new/:id", function (req, res) {
 		bcrypt
 			.genSalt(10)
 			.then((salt) => {
-				console.log(req.params.id);
 				return bcrypt.hash(req.body.reset.password, salt);
 			})
 			.then((hash) => {
@@ -277,13 +380,13 @@ router.post("/user/reset-new/:id", function (req, res) {
 				console.log(err);
 			});
 	} else {
-		console.log("Password Same !! Aborting");
 		res.render("./user/reset-new", { email: req.params.id, error: "Both passwords must match" });
 	}
 });
 
 router.get("/user/logout", function (req, res) {
-	req.session.userId = "";
+	req.session.destroy(); // works better, destroys the session
+	// req.session.userId = ""; does not destroys the session
 	res.redirect("/user/login");
 });
 

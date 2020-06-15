@@ -6,78 +6,45 @@
 		<table class="table table-hover table-active">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">Govt. Id</th>
+					<th scope="col" style="padding-left: 40px;">Govt. Id</th>
 					<th scope="col">Name</th>
-					<th scope="col">Date</th>
-					<th scope="col">Check In</th>
-					<th scope="col">Check Out</th>
+					<th scope="col">Purpose</th>
+					<th scope="col">Expec. Arrival</th>
+					<th scope="col">Actual Arrival</th>
+					<th scope="col">OTP</th>
 				</tr>
 			</thead>
 			<tbody>
+				<% dataObject.forEach((eachEntry) => { %>
 				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-					<td>@mdo</td>
+					<th scope="row" style="padding-left: 40px;"><%= eachEntry.aadharId%></th>
+					<td><%= eachEntry.name%></td>
+					<td><%= eachEntry.visitingRecord.purpose%></td>
+					<td>
+						<%= eachEntry.visitingRecord.expecArrival.getDate()%>/<%= eachEntry.visitingRecord.expecArrival.getMonth() %>/<%= eachEntry.visitingRecord.expecArrival.getFullYear() %> @ <%=
+						eachEntry.visitingRecord.expecArrival.getHours() %>:<%= eachEntry.visitingRecord.expecArrival.getMinutes() %>
+					</td>
+					<% if(eachEntry.visitingRecord.actualArrival){ %>
+					<td>
+						<%= eachEntry.visitingRecord.actualArrival.getDate()%>/<%= eachEntry.visitingRecord.actualArrival.getMonth() %>/<%= eachEntry.visitingRecord.actualArrival.getFullYear() %> @
+						<%= eachEntry.visitingRecord.actualArrival.getHours() %>:<%= eachEntry.visitingRecord.actualArrival.getMinutes() %>
+					</td>
+					<% }else{ %>
+
+					<td>---------------</td>
+					<% }%>
+
+					<td><%= eachEntry.visitingRecord.otp%></td>
 				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-					<td>@twitter</td>
-				</tr>
+				<% }) %>
 			</tbody>
 		</table>
 		<div style="display: flex; justify-content: flex-end;" class="mt-4">
+			<a href="/user/visitor" class="btn btn-danger mr-3">Refresh</a>
+
 			<a href="/user" class="btn btn-info mr-3">Go Back</a>
 			<a href="/user/visitor/new" class="btn btn-success">Request New Visitor</a>
 		</div>
-	</div>
-	<div class="mt-1">
-		<p class="text-primary" style="font-size: 1.3rem;">Pending Requests</p>
-		<table class="table table-hover table-active">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col">Govt. Id</th>
-					<th scope="col">Name</th>
-					<th scope="col">Date</th>
-					<th scope="col">Check In</th>
-					<th scope="col">Check Out</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-					<td>@twitter</td>
-				</tr>
-			</tbody>
-		</table>
 	</div>
 </div>
 <%- include("../../partials/footer") %>
