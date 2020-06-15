@@ -7,6 +7,7 @@ var express = require("express"),
 	nodemailer = require("nodemailer"),
 	MongoStore = require("connect-mongo")(session),
 	Dom_helps = require("../models/dom_help"),
+	Visitors = require("../models/visitor"),
 	Residents = require("../models/resident");
 
 router.use(
@@ -122,10 +123,52 @@ router.get("/user/dom_help/delete/:id", function (req, res) {
 			console.log(err);
 		});
 });
+// =======================================
+// Horribly implemented block begins
+// =======================================
+
+let dataObject = []; // pushing data into this array, after using this array is
+// getting empty using dataObject.lenth = 0
+i = 0;
 
 router.get("/user/visitor", redirectLogin, function (req, res) {
-	res.render("./user/visitor/home");
+	Residents.findOne({ email: req.session.userEmail })
+		.then((returnedResidentDataFromDb) => {
+			returnedResidentDataFromDb.visitorsArray.forEach((eachVisitorRefrence) => {
+				Visitors.findOne({ _id: eachVisitorRefrence.visitorId })
+					.then((returnedVisitorDataFromDb) => {
+						returnedVisitorDataFromDb.visitingRecordArray.forEach((eachVisitingRecord) => {
+							if (eachVisitingRecord._id == eachVisitorRefrence.visitingId) {
+								dataObject.push({
+									name: returnedVisitorDataFromDb.name,
+									aadharId: returnedVisitorDataFromDb.aadharId,
+									visitingRecord: eachVisitingRecord,
+								});
+							}
+						});
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			});
+			if (i === 0) {
+				res.redirect("/user/visitor");
+			}
+
+			if (i > 0) {
+				res.render("./user/visitor/home", { dataObject });
+				dataObject.length = 0;
+			}
+			i++;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
+
+// ==================================
+// Horribly implemented block ends
+// ==================================
 
 router.get("/user/visitor/new", redirectLogin, function (req, res) {
 	res.render("./user/visitor/new");
@@ -283,7 +326,8 @@ router.post("/user/reset-new/:id", function (req, res) {
 });
 
 router.get("/user/logout", function (req, res) {
-	req.session.userId = "";
+	req.session.destroy(); // works better, destroys the session
+	// req.session.userId = ""; does not destroys the session
 	res.redirect("/user/login");
 });
 
