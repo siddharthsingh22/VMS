@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 
 const visitingRecordSchema = new mongoose.Schema({
 	purpose: { type: String, required: true },
-	date: { type: String, required: true },
 	otp: { type: Number },
-	expecArrival: { type: String, required: true },
-	expecDeparture: { type: String, required: true },
-	actualArrival: { type: String },
-	actualDeparture: { type: String },
+	expecArrival: { type: Date, required: true },
+	expecDeparture: { type: Date, required: true },
+	actualArrival: { type: Date },
+	actualDeparture: { type: Date },
 });
 
 const VisitingRecords = mongoose.model("VisitingRecord", visitingRecordSchema);
