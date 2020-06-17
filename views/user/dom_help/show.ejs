@@ -13,23 +13,25 @@
 			<img class="col-12 col-md-3 mt-2 img-fluid rounded" src="<%= returnedDom_HelpDataFromDb.image %>" alt="Domestic Help Image" style="height: 220px;" />
 		</div>
 	</div>
-	<table class="table mt-5 table-hover table-active">
-		<thead class="thead-dark">
-			<tr>
-				<th scope="col" style="width: 30%; padding-left: 10%;">Date</th>
-				<th scope="col" style="width: 25%;">Check In</th>
-				<th scope="col" style="width: 15%;">Check Out</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% returnedDom_HelpDataFromDb.timeStamps.forEach((eachDayData) => { %>
-			<tr>
-				<th scope="row" style="padding-left: 10%;"><%= eachDayData.date %></th>
-				<td><%= eachDayData.checkIn %></td>
-				<td><%= eachDayData.checkOut %></td>
-			</tr>
-			<% }) %>
-		</tbody>
-	</table>
+	<div style="max-width: 100%; overflow: auto;">
+		<table class="table mt-5 table-hover table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" style="width: 30%; padding-left: 10%;">Date</th>
+					<th scope="col" style="width: 25%;">Check In</th>
+					<th scope="col" style="width: 15%;">Check Out</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% returnedDom_HelpDataFromDb.timeStamps.forEach((eachDayData) => { %>
+				<tr>
+					<th scope="row" style="padding-left: 10%;"><%= eachDayData.date %></th>
+					<td><%= eachDayData.checkIn %></td>
+					<td><%= eachDayData.checkOut %></td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
 </div>
 <%- include("../../partials/footer") %>
