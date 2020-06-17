@@ -2,43 +2,45 @@
 
 <div class="container">
 	<div class="mt-5">
-		<p class="text-primary" style="font-size: 1.3rem;">Past Visitor Records</p>
-		<table class="table table-hover table-active">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col" style="padding-left: 40px;">Govt. Id</th>
-					<th scope="col">Name</th>
-					<th scope="col">Purpose</th>
-					<th scope="col">Expec. Arrival</th>
-					<th scope="col">Actual Arrival</th>
-					<th scope="col">OTP</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% dataObject.forEach((eachEntry) => { %>
-				<tr>
-					<th scope="row" style="padding-left: 40px;"><%= eachEntry.aadharId%></th>
-					<td><%= eachEntry.name%></td>
-					<td><%= eachEntry.visitingRecord.purpose%></td>
-					<td>
-						<%= eachEntry.visitingRecord.expecArrival.getDate()%>/<%= eachEntry.visitingRecord.expecArrival.getMonth() %>/<%= eachEntry.visitingRecord.expecArrival.getFullYear() %> @ <%=
-						eachEntry.visitingRecord.expecArrival.getHours() %>:<%= eachEntry.visitingRecord.expecArrival.getMinutes() %>
-					</td>
-					<% if(eachEntry.visitingRecord.actualArrival){ %>
-					<td>
-						<%= eachEntry.visitingRecord.actualArrival.getDate()%>/<%= eachEntry.visitingRecord.actualArrival.getMonth() %>/<%= eachEntry.visitingRecord.actualArrival.getFullYear() %> @
-						<%= eachEntry.visitingRecord.actualArrival.getHours() %>:<%= eachEntry.visitingRecord.actualArrival.getMinutes() %>
-					</td>
-					<% }else{ %>
+		<div style="max-width: 100%; overflow: auto;">
+			<table class="table table-hover table-active">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col" style="padding-left: 40px;">Govt. Id</th>
+						<th scope="col">Name</th>
+						<th scope="col">Purpose</th>
+						<th scope="col">Expec. Arrival</th>
+						<th scope="col">Actual Arrival</th>
+						<th scope="col">OTP</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% dataObject.forEach((eachEntry) => { %>
+					<tr>
+						<th scope="row" style="padding-left: 40px;"><%= eachEntry.aadharId%></th>
+						<td><%= eachEntry.name%></td>
+						<td><%= eachEntry.visitingRecord.purpose%></td>
+						<td>
+							<%= eachEntry.visitingRecord.expecArrival.getDate()%>/<%= eachEntry.visitingRecord.expecArrival.getMonth() %>/<%= eachEntry.visitingRecord.expecArrival.getFullYear() %> @
+							<%= eachEntry.visitingRecord.expecArrival.getHours() %>:<%= eachEntry.visitingRecord.expecArrival.getMinutes() %>
+						</td>
+						<% if(eachEntry.visitingRecord.actualArrival){ %>
+						<td>
+							<%= eachEntry.visitingRecord.actualArrival.getDate()%>/<%= eachEntry.visitingRecord.actualArrival.getMonth() %>/<%= eachEntry.visitingRecord.actualArrival.getFullYear() %>
+							@ <%= eachEntry.visitingRecord.actualArrival.getHours() %>:<%= eachEntry.visitingRecord.actualArrival.getMinutes() %>
+						</td>
+						<% }else{ %>
 
-					<td>---------------</td>
-					<% }%>
+						<td>---------------</td>
+						<% }%>
 
-					<td><%= eachEntry.visitingRecord.otp%></td>
-				</tr>
-				<% }) %>
-			</tbody>
-		</table>
+						<td><%= eachEntry.visitingRecord.otp%></td>
+					</tr>
+					<% }) %>
+				</tbody>
+			</table>
+		</div>
+
 		<div style="display: flex; justify-content: flex-end;" class="mt-4">
 			<a href="/user/visitor" class="btn btn-danger mr-3">Refresh</a>
 
