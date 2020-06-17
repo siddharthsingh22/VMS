@@ -1,0 +1,42 @@
+<%- include("../partials/header_security", {loggedIn : true}) %>
+<div class="container" style="margin-top: 50px;">
+	<div class="border border-primary rounded pt-4 pb-5 pr-4 pl-4">
+		<form method="POST" action="/security">
+			<div class="form-group">
+				<label for="exampleInputEmail1">For Domestic Help</label>
+				<input type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" />
+				<small id="emailHelp" class="form-text text-muted">Enter the 6 digit domestic help id</small>
+			</div>
+			<div class="custom-control custom-radio custom-control-inline">
+				<input type="radio" id="radio1" name="radio1" value="checkIn" class="custom-control-input" />
+				<label class="custom-control-label" for="radio1">Check In</label>
+			</div>
+			<div class="custom-control custom-radio custom-control-inline">
+				<input type="radio" id="radio2" name="radio1" value="checkOut" class="custom-control-input" />
+				<label class="custom-control-label" for="radio2">Check Out</label>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+	<div class="border border-primary rounded pt-4 pb-5 pr-4 pl-4 mt-5">
+		<form method="POST" action="/security">
+			<div class="form-group">
+				<label for="exampleInputEmail1">For Visitors</label>
+				<input type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Visitors OTP" />
+				<small id="emailHelp" class="form-text text-muted">Enter the 6 digit visitor OTP</small>
+			</div>
+			<div class="custom-control custom-radio custom-control-inline">
+				<input type="radio" id="radio3" name="radio2" value="checkIn" class="custom-control-input" />
+				<label class="custom-control-label" for="radio3">Check In</label>
+			</div>
+			<div class="custom-control custom-radio custom-control-inline">
+				<input type="radio" id="radio4" name="radio2" value="checkOut" class="custom-control-input" />
+				<label class="custom-control-label" for="radio4">Check Out</label>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</div>
+<%- include("../partials/footer" )%>
