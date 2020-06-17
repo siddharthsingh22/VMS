@@ -1,35 +1,37 @@
 const mongoose = require("mongoose"),
 	Dom_helps = require("./models/dom_help"),
 	Visitors = require("./models/visitor"),
+	Security = require("./models/security"),
 	Residents = require("./models/resident");
+const Securities = require("./models/security");
 
 const seedDb = () => {
-	Residents.deleteMany({})
-		.then(() => {
-			return Residents.create({
-				name: "Siddharth Pratap Singh",
-				email: "siddharthpratapsingh21@gmail.com",
-				phoneNo: 9889050412,
-				password: "$2a$10$wjpO.DeKewaaMhNgT1WMnOpFo08ixXkr57HK/yOOhojj2SYftQ.ue",
-				visitorsArray: [
-					{
-						visitorId: "5ee61c22e1561b090d762ef5",
-						visitingId: "5ee61c22e1561b090d762ef6",
-					},
-					{
-						visitorId: "5ee61c22e1561b090d762efb",
-						visitingId: "5ee61c22e1561b090d762efd",
-					},
-				],
-			});
-		})
-		.then((returnedResidentFromDb) => {
-			console.log("Added Resident Account");
-		})
+	// Residents.deleteMany({})
+	// 	.then(() => {
+	// 		return Residents.create({
+	// 			name: "Siddharth Pratap Singh",
+	// 			email: "siddharthpratapsingh21@gmail.com",
+	// 			phoneNo: 9889050412,
+	// 			password: "$2a$10$wjpO.DeKewaaMhNgT1WMnOpFo08ixXkr57HK/yOOhojj2SYftQ.ue",
+	// 			visitorsArray: [
+	// 				{
+	// 					visitorId: "5ee61c22e1561b090d762ef5",
+	// 					visitingId: "5ee61c22e1561b090d762ef6",
+	// 				},
+	// 				{
+	// 					visitorId: "5ee61c22e1561b090d762efb",
+	// 					visitingId: "5ee61c22e1561b090d762efd",
+	// 				},
+	// 			],
+	// 		});
+	// 	})
+	// 	.then((returnedResidentFromDb) => {
+	// 		console.log("Added Resident Account");
+	// 	})
 
-		.catch((err) => {
-			console.log(err);
-		});
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 	});
 
 	// Dom_helps.deleteMany({})
 
@@ -358,6 +360,17 @@ const seedDb = () => {
 	// 	.catch((err) => {
 	// 		console.log(err);
 	// 	});
+	Securities.create({
+		name: "Security1",
+		id: "Security@1234",
+		password: "1234",
+	})
+		.then((returnedSecurityFromDb) => {
+			console.log(returnedSecurityFromDb);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 };
 
 module.exports = seedDb;

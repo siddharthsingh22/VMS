@@ -17,3 +17,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 // seedDb();
 app.use(require("./routes/resident"));
+app.use(require("./routes/security"));
+
+app.get("*", function (req, res) {
+	res.send("404 Page Not Found");
+});
