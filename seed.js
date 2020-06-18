@@ -28,13 +28,10 @@ const seedDb = () => {
 	// 	.then((returnedResidentFromDb) => {
 	// 		console.log("Added Resident Account");
 	// 	})
-
 	// 	.catch((err) => {
 	// 		console.log(err);
 	// 	});
-
 	// Dom_helps.deleteMany({})
-
 	// 	.then(() => {
 	// 		return Dom_helps.create(
 	// 			{
@@ -360,17 +357,17 @@ const seedDb = () => {
 	// 	.catch((err) => {
 	// 		console.log(err);
 	// 	});
-	Securities.create({
-		name: "Security1",
-		id: "Security@1234",
-		password: "1234",
-	})
-		.then((returnedSecurityFromDb) => {
-			console.log(returnedSecurityFromDb);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	// Securities.create({
+	// 	name: "Security1",
+	// 	id: "Security@1234",
+	// 	password: "1234",
+	// })
+	// 	.then((returnedSecurityFromDb) => {
+	// 		console.log(returnedSecurityFromDb);
+	// 	})
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 	});
 };
 
 module.exports = seedDb;
