@@ -6,35 +6,35 @@
 			<table class="table table-hover table-active">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col" style="padding-left: 40px;">Govt. Id</th>
-						<th scope="col">Name</th>
-						<th scope="col">Purpose</th>
-						<th scope="col">Expec. Arrival</th>
-						<th scope="col">Actual Arrival</th>
-						<th scope="col">OTP</th>
+						<th scope="col" class="text-center">Govt. Id</th>
+						<th scope="col" class="text-center">Name</th>
+						<th scope="col" class="text-center">Purpose</th>
+						<th scope="col" class="text-center">Expec. Arrival</th>
+						<th scope="col" class="text-center">Actual Arrival</th>
+						<th scope="col" class="text-center">OTP</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% dataObject.forEach((eachEntry) => { %>
 					<tr>
-						<th scope="row" style="padding-left: 40px;"><%= eachEntry.aadharId%></th>
-						<td><%= eachEntry.name%></td>
-						<td><%= eachEntry.visitingRecord.purpose%></td>
-						<td>
+						<th scope="row" class="text-center"><%= eachEntry.aadharId%></th>
+						<td class="text-center"><%= eachEntry.name%></td>
+						<td class="text-center"><%= eachEntry.visitingRecord.purpose%></td>
+						<td class="text-center">
 							<%= eachEntry.visitingRecord.expecArrival.getDate()%>/<%= eachEntry.visitingRecord.expecArrival.getMonth() %>/<%= eachEntry.visitingRecord.expecArrival.getFullYear() %> @
 							<%= eachEntry.visitingRecord.expecArrival.getHours() %>:<%= eachEntry.visitingRecord.expecArrival.getMinutes() %>
 						</td>
 						<% if(eachEntry.visitingRecord.actualArrival){ %>
-						<td>
+						<td class="text-center">
 							<%= eachEntry.visitingRecord.actualArrival.getDate()%>/<%= eachEntry.visitingRecord.actualArrival.getMonth() %>/<%= eachEntry.visitingRecord.actualArrival.getFullYear() %>
 							@ <%= eachEntry.visitingRecord.actualArrival.getHours() %>:<%= eachEntry.visitingRecord.actualArrival.getMinutes() %>
 						</td>
 						<% }else{ %>
 
-						<td>---------------</td>
+						<td class="text-center">-------------</td>
 						<% }%>
 
-						<td><%= eachEntry.visitingRecord.otp%></td>
+						<td class="text-center"><%= eachEntry.visitingRecord.otp%></td>
 					</tr>
 					<% }) %>
 				</tbody>

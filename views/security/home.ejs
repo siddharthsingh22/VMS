@@ -1,18 +1,27 @@
 <%- include("../partials/header_security", {loggedIn : true}) %>
 <div class="container" style="margin-top: 50px;">
 	<div class="border border-primary rounded pt-4 pb-5 pr-4 pl-4">
-		<form method="POST" action="/security">
+		<% if(error){ %>
+		<div class="alert alert-danger text-center" role="alert">
+			<%= error %>
+		</div>
+		<% } %> <% if(success){ %>
+		<div class="alert alert-success text-center" role="alert">
+			<a href="/security/dom_help/show/<%=id%>"><%= success %></a>
+		</div>
+		<% } %>
+		<form method="POST" action="/security/dom_help">
 			<div class="form-group">
 				<label for="exampleInputEmail1">For Domestic Help</label>
-				<input type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" />
+				<input type="string" name="dom_helpId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" />
 				<small id="emailHelp" class="form-text text-muted">Enter the 6 digit domestic help id</small>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-				<input type="radio" id="radio1" name="radio1" value="checkIn" class="custom-control-input" />
+				<input type="radio" id="radio1" name="radio1" value="checkIn" class="custom-control-input" required />
 				<label class="custom-control-label" for="radio1">Check In</label>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-				<input type="radio" id="radio2" name="radio1" value="checkOut" class="custom-control-input" />
+				<input type="radio" id="radio2" name="radio1" value="checkOut" class="custom-control-input" required />
 				<label class="custom-control-label" for="radio2">Check Out</label>
 			</div>
 
@@ -20,7 +29,7 @@
 		</form>
 	</div>
 	<div class="border border-primary rounded pt-4 pb-5 pr-4 pl-4 mt-5">
-		<form method="POST" action="/security">
+		<form method="POST" action="/security/visitor">
 			<div class="form-group">
 				<label for="exampleInputEmail1">For Visitors</label>
 				<input type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Visitors OTP" />
