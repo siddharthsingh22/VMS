@@ -141,10 +141,11 @@ router.post("/security/visitor", function (req, res) {
 						if (!eachVisitingRecord.actualArrival) {
 							if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
 								eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm");
+								const arrivalTime = eachVisitingRecord.expecArrival;
 								returnedVisitorFromDb
 									.save()
 									.then(() => {
-										res.render("./security/home", { error: "", success: "", error2: "", success2: "Done! Good to go" });
+										res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected arrival time is ${arrivalTime}` });
 									})
 									.catch((err) => {
 										console.log(err);
@@ -170,10 +171,12 @@ router.post("/security/visitor", function (req, res) {
 					if (!eachVisitingRecord.actualDeparture && eachVisitingRecord.actualArrival) {
 						if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
 							eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm");
+							const departureTime = eachVisitingRecord.expecDeparture;
+
 							returnedVisitorFromDb
 								.save()
 								.then(() => {
-									res.render("./security/home", { error: "", success: "", error2: "", success2: "Done! Good to go" });
+									res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected departure time is ${departureTime}` });
 								})
 								.catch((err) => {
 									res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
