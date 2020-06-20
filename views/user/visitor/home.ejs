@@ -20,20 +20,8 @@
 						<th scope="row" class="text-center"><%= eachEntry.aadharId%></th>
 						<td class="text-center"><%= eachEntry.name%></td>
 						<td class="text-center"><%= eachEntry.visitingRecord.purpose%></td>
-						<td class="text-center">
-							<%= eachEntry.visitingRecord.expecArrival.getDate()%>/<%= eachEntry.visitingRecord.expecArrival.getMonth() %>/<%= eachEntry.visitingRecord.expecArrival.getFullYear() %> @
-							<%= eachEntry.visitingRecord.expecArrival.getHours() %>:<%= eachEntry.visitingRecord.expecArrival.getMinutes() %>
-						</td>
-						<% if(eachEntry.visitingRecord.actualArrival){ %>
-						<td class="text-center">
-							<%= eachEntry.visitingRecord.actualArrival.getDate()%>/<%= eachEntry.visitingRecord.actualArrival.getMonth() %>/<%= eachEntry.visitingRecord.actualArrival.getFullYear() %>
-							@ <%= eachEntry.visitingRecord.actualArrival.getHours() %>:<%= eachEntry.visitingRecord.actualArrival.getMinutes() %>
-						</td>
-						<% }else{ %>
-
-						<td class="text-center">-------------</td>
-						<% }%>
-
+						<td class="text-center"><%= eachEntry.visitingRecord.expecArrival%></td>
+						<td class="text-center"><%= eachEntry.visitingRecord.actualArrival%></td>
 						<td class="text-center"><%= eachEntry.visitingRecord.otp%></td>
 					</tr>
 					<% }) %>

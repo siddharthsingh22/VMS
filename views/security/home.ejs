@@ -13,7 +13,7 @@
 		<form method="POST" action="/security/dom_help">
 			<div class="form-group">
 				<label for="exampleInputEmail1">For Domestic Help</label>
-				<input type="string" name="dom_helpId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" />
+				<input type="string" name="dom_helpId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" required />
 				<small id="emailHelp" class="form-text text-muted">Enter the 6 digit domestic help id</small>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
@@ -25,26 +25,38 @@
 				<label class="custom-control-label" for="radio2">Check Out</label>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-success">Submit</button>
 		</form>
 	</div>
 	<div class="border border-primary rounded pt-4 pb-5 pr-4 pl-4 mt-5">
+		<% if(error2){ %>
+		<div class="alert alert-danger text-center" role="alert">
+			<%= error2 %>
+		</div>
+		<% } %> <% if(success2){ %>
+		<div class="alert alert-success text-center" role="alert">
+			<%= success2 %>
+		</div>
+		<% } %>
 		<form method="POST" action="/security/visitor">
 			<div class="form-group">
-				<label for="exampleInputEmail1">For Visitors</label>
-				<input type="string" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Visitors OTP" />
-				<small id="emailHelp" class="form-text text-muted">Enter the 6 digit visitor OTP</small>
+				<label>For Visitors</label>
+				<input type="string" class="form-control" placeholder="Visitor Aadhar Id" name="visitorAadharId" required />
+				<small class="form-text text-muted">Enter the Visitors Aadhar Id</small>
+				<br />
+				<input type="string" class="form-control" placeholder="Visitor OTP" name="visitorOtp" required />
+				<small class="form-text text-muted">Enter the 6 digit visitor OTP</small>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-				<input type="radio" id="radio3" name="radio2" value="checkIn" class="custom-control-input" />
+				<input type="radio" id="radio3" name="radio2" value="checkIn" class="custom-control-input" required />
 				<label class="custom-control-label" for="radio3">Check In</label>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-				<input type="radio" id="radio4" name="radio2" value="checkOut" class="custom-control-input" />
+				<input type="radio" id="radio4" name="radio2" value="checkOut" class="custom-control-input" required />
 				<label class="custom-control-label" for="radio4">Check Out</label>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-success">Submit</button>
 		</form>
 	</div>
 </div>
