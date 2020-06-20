@@ -1,3 +1,5 @@
+const Visitors = require("../models/visitor");
+
 const express = require("express"),
 	router = express.Router(),
 	mongoose = require("mongoose"),
@@ -50,7 +52,7 @@ const redirectSecurity = (req, res, next) => {
 router.get("/security", redirectLogin, function (req, res) {
 	// const today = moment();
 	// console.log(today.format("hh:mm:ss"));
-	res.render("./security/home", { error: "", success: "" });
+	res.render("./security/home", { error: "", success: "", error2: "", success2: "" });
 });
 
 router.post("/security/dom_help", function (req, res) {
@@ -59,7 +61,7 @@ router.post("/security/dom_help", function (req, res) {
 			.then((returnedDom_helpDataFromDb) => {
 				const len = returnedDom_helpDataFromDb.timeStamps.length;
 				if (!returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
-					res.render("./security/home", { success: "", error: "Domestic Help has already checked-in. Check-out before trying to check-in again." });
+					res.render("./security/home", { success: "", error: "Domestic Help has already checked-in. Check-out before trying to check-in again.", error2: "", success2: "" });
 				} else {
 					const today = moment();
 					returnedDom_helpDataFromDb.timeStamps.push({
@@ -69,17 +71,23 @@ router.post("/security/dom_help", function (req, res) {
 					returnedDom_helpDataFromDb
 						.save()
 						.then((updatedDom_helpDataFromDb) => {
-							res.render("./security/home", { success: `Checked In !! Click Here to view ${updatedDom_helpDataFromDb.name}'s profile`, error: "", id: updatedDom_helpDataFromDb.id });
+							res.render("./security/home", {
+								success: `Checked In !! Click Here to view ${updatedDom_helpDataFromDb.name}'s profile`,
+								error: "",
+								id: updatedDom_helpDataFromDb.id,
+								error2: "",
+								success2: "",
+							});
 						})
 						.catch((err) => {
-							res.render("./security/home", { success: "", error: "Please try again." });
+							res.render("./security/home", { success: "", error: "Please try again.", error2: "", success2: "" });
 							console.log(err);
 						});
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				res.render("./security/home", { success: "", error: "Domestic help not registered." });
+				res.render("./security/home", { success: "", error: "Domestic help not registered.", error2: "", success2: "" });
 			});
 	}
 	if (req.body.radio1 === "checkOut") {
@@ -92,18 +100,24 @@ router.post("/security/dom_help", function (req, res) {
 					returnedDom_helpDataFromDb
 						.save()
 						.then(() => {
-							res.render("./security/home", { success: `Checked Out !! Click Here to view ${returnedDom_helpDataFromDb.name}'s profile`, error: "", id: returnedDom_helpDataFromDb.id });
+							res.render("./security/home", {
+								success: `Checked Out !! Click Here to view ${returnedDom_helpDataFromDb.name}'s profile`,
+								error: "",
+								id: returnedDom_helpDataFromDb.id,
+								error2: "",
+								success2: "",
+							});
 						})
 						.catch((err) => {
-							res.render("./security/home", { success: "", error: "Please try again." });
+							res.render("./security/home", { success: "", error: "Please try again.", error2: "", success2: "" });
 							console.log(err);
 						});
 				} else {
-					res.render("./security/home", { success: "", error: "Please check-in before trying to check-out." });
+					res.render("./security/home", { success: "", error: "Please check-in before trying to check-out.", error2: "", success2: "" });
 				}
 			})
 			.catch((err) => {
-				res.render("./security/home", { success: "", error: "Domestic help not registered." });
+				res.render("./security/home", { success: "", error: "Domestic help not registered.", error2: "", success2: "" });
 			});
 	}
 });
@@ -111,12 +125,69 @@ router.post("/security/dom_help", function (req, res) {
 router.get("/security/dom_help/show/:id", function (req, res) {
 	Dom_helps.findOne({ id: req.params.id })
 		.then((returnedDom_HelpDataFromDb) => {
-			// console.log(returnedDom_helpDataFromDb);
 			res.render("./security/show", { returnedDom_HelpDataFromDb });
 		})
 		.catch((err) => {
 			console.log(err);
 		});
+});
+
+router.post("/security/visitor", function (req, res) {
+	if (req.body.radio2 === "checkIn") {
+		Visitors.findOne({ aadharId: req.body.visitorAadharId })
+			.then((returnedVisitorFromDb) => {
+				if (!returnedVisitorFromDb.isBlacklisted) {
+					returnedVisitorFromDb.visitingRecordArray.forEach((eachVisitingRecord) => {
+						if (!eachVisitingRecord.actualArrival) {
+							if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
+								eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm");
+								returnedVisitorFromDb
+									.save()
+									.then(() => {
+										res.render("./security/home", { error: "", success: "", error2: "", success2: "Done! Good to go" });
+									})
+									.catch((err) => {
+										console.log(err);
+										res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
+									});
+							}
+						} else {
+							res.render("./security/home", { error: "", success: "", error2: "OTP Invalid", success2: "" });
+						}
+					});
+				} else {
+					res.render("./security/home", { success: "", error: "", success2: "", error2: "VISITOR IS BLACKLISTED. CONTACT ADMIN." });
+				}
+			})
+			.catch((err) => {
+				res.render("./security/home", { error: "", success: "", error2: "Visitor Record doesn't exist.", success2: "" });
+			});
+	}
+	if (req.body.radio2 === "checkOut") {
+		Visitors.findOne({ aadharId: req.body.visitorAadharId })
+			.then((returnedVisitorFromDb) => {
+				returnedVisitorFromDb.visitingRecordArray.forEach((eachVisitingRecord) => {
+					if (!eachVisitingRecord.actualDeparture && eachVisitingRecord.actualArrival) {
+						if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
+							eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm");
+							returnedVisitorFromDb
+								.save()
+								.then(() => {
+									res.render("./security/home", { error: "", success: "", error2: "", success2: "Done! Good to go" });
+								})
+								.catch((err) => {
+									res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
+								});
+						}
+					} else {
+						res.render("./security/home", { error: "", success: "", error2: "OTP Invalid", success2: "" });
+					}
+				});
+			})
+			.catch((err) => {
+				res.render("./security/home", { error: "", success: "", error2: "Visitor Record doesn't exist.", success2: "" });
+			});
+	}
 });
 
 // =================================

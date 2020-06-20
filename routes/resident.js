@@ -177,8 +177,8 @@ router.post("/user/visitor/new", function (req, res) {
 			const randomNumber = Math.floor(100000 + Math.random() * 900000);
 			returnedExistingVisitorFromDb.visitingRecordArray.push({
 				purpose: req.body.new.purpose,
-				expecArrival: req.body.new.expecArrivalTime,
-				expecDeparture: req.body.new.expecDepartureTime,
+				expecArrival: req.body.new.expecArrivalTime.replace("T", ", "),
+				expecDeparture: req.body.new.expecDepartureTime.replace("T", ", "),
 				otp: randomNumber,
 			});
 			returnedExistingVisitorFromDb.save().then((updatedExistingVisitorFromDb) => {
@@ -209,8 +209,8 @@ router.post("/user/visitor/new", function (req, res) {
 					const randomNumber = Math.floor(100000 + Math.random() * 900000);
 					returnedNewVisitorFromDb.visitingRecordArray.push({
 						purpose: req.body.new.purpose,
-						expecArrival: req.body.new.expecArrivalTime,
-						expecDeparture: req.body.new.expecDepartureTime,
+						expecArrival: req.body.new.expecArrivalTime.replace("T", ", "),
+						expecDeparture: req.body.new.expecDepartureTime.replace("T", ", "),
 						otp: randomNumber,
 					});
 					returnedNewVisitorFromDb.save().then(() => {
