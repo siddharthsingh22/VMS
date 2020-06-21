@@ -1,0 +1,70 @@
+div#login-box{
+  background: transparent;
+}
+form{
+  height: 100%;
+}
+div#register-box h1{
+  font-size: 3.4rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: white;
+}
+div.form-group{
+  outline: none;
+}
+form input#form-input{
+  margin-top: 1rem;
+  background: transparent ;
+  color: white;
+  border:none;
+  border-bottom: 1.2px solid white;
+  border-radius: 0;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  outline: 0;
+}
+form input#form-input::placeholder{
+  color: white;
+  font-size: 1.6rem;
+}
+
+button[type="submit"]{
+  background: transparent ;
+  border: 2px solid var(--main-orange-color) ;
+  width: auto;
+  padding: .7rem 2rem;
+  border-radius: 2rem;
+  flex-basis: 1;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: auto;
+}
+
+button[type="submit"]:hover{
+  background: var(--main-orange-color) ;
+  border: 2px solid var(--main-orange-color) ;
+}
+
+#login-btn{
+  background: transparent ;
+  border: 2px solid var(--main-orange-color) ;
+  width: auto;
+  padding: .7rem 2rem;
+  border-radius: 2rem;
+  flex-basis: 1;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: auto;
+
+}
+
+#login-btn:hover{
+  background: var(--main-orange-color) ;
+  border: 2px solid var(--main-orange-color) ;
+}
+
+a#forgot-btn{
+  color: white;
+  font-size: 1.3rem;
+}
