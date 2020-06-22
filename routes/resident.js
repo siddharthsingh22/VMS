@@ -175,11 +175,14 @@ router.post("/user/visitor/new", function (req, res) {
 	Visitors.findOne({ aadharId: req.body.new.aadharId })
 		.then((returnedExistingVisitorFromDb) => {
 			const randomNumber = Math.floor(100000 + Math.random() * 900000);
+
 			returnedExistingVisitorFromDb.visitingRecordArray.push({
 				purpose: req.body.new.purpose,
 				expecArrival: req.body.new.expecArrivalTime.replace("T", ", "),
 				expecDeparture: req.body.new.expecDepartureTime.replace("T", ", "),
 				otp: randomNumber,
+				residentName: req.session.userName,
+				residentEmail: req.session.userEmail,
 			});
 			returnedExistingVisitorFromDb.save().then((updatedExistingVisitorFromDb) => {
 				Residents.findOne({ email: req.session.userEmail })
@@ -212,6 +215,8 @@ router.post("/user/visitor/new", function (req, res) {
 						expecArrival: req.body.new.expecArrivalTime.replace("T", ", "),
 						expecDeparture: req.body.new.expecDepartureTime.replace("T", ", "),
 						otp: randomNumber,
+						residentName: req.session.userName,
+						residentEmail: req.session.userEmail,
 					});
 					returnedNewVisitorFromDb.save().then(() => {
 						Residents.findOne({ email: req.session.userEmail })
@@ -258,6 +263,7 @@ router.post("/user/login", redirectUser, function (req, res) {
 					if (resHash) {
 						req.session.userId = returnedUserFromDb._id;
 						req.session.userEmail = returnedUserFromDb.email;
+						req.session.userName = returnedUserFromDb.name;
 						res.redirect("/user");
 					} else {
 						res.render("./user/login", { error: "Incorrect Password", success: "" });
