@@ -2,15 +2,16 @@
 <div class="container">
 	<div class="jumbotron mt-5" style="padding: 5vh 8vw;">
 		<div class="row">
-			<div class="col-12 col-md-9">
+			<div class="col-12 col-md-8">
 				<h1 class="display-4" style="font-size: 2.5rem;">Name : <%= returnedDom_HelpDataFromDb.name %></h1>
 				<h1 class="display-4" style="font-size: 2.5rem;">Id : <%= returnedDom_HelpDataFromDb.id %></h1>
-
-				<h1 class="display-4 mt-3" style="font-size: 1.2rem;">Address : <%= returnedDom_HelpDataFromDb.address %></h1>
+				<h1 class="display-4 mt-4" style="font-size: 1.2rem;">Phone Number : <%= returnedDom_HelpDataFromDb.aadharNo %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Address : <%= returnedDom_HelpDataFromDb.address %></h1>
 				<h1 class="display-4" style="font-size: 1.2rem;">Phone Number : <%= returnedDom_HelpDataFromDb.phoneNo %></h1>
-				<a href="/user/dom_help" class="btn btn-success mt-2 mb-2">Go Back</a>
+
+				<a href="/user/dom_help" class="btn btn-success mt-4 mb-2">Go Back</a>
 			</div>
-			<img class="col-12 col-md-3 mt-2 img-fluid rounded" src="<%= returnedDom_HelpDataFromDb.image %>" alt="Domestic Help Image" style="height: 220px;" />
+			<img class="col-12 col-md-4 mt-2 img-fluid rounded" src="<%= returnedDom_HelpDataFromDb.coverImagePath %>" alt="Domestic Help Image" style="height: 300px;" />
 		</div>
 	</div>
 	<div style="max-width: 100%; overflow: auto;">
