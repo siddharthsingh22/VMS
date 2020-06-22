@@ -7,6 +7,7 @@ const express = require("express"),
 	Admins = require("../models/admin"),
 	Securities = require("../models/security"),
 	Dom_helps = require("../models/dom_help"),
+	Visitors = require("../models/visitor"),
 	mongoose = require("mongoose");
 
 router.use(
@@ -235,6 +236,44 @@ router.get("/admin/securityPersonnel/delete/:id", function (req, res) {
 			console.log(err);
 			res.redirect("/admin/securityPersonnel");
 		});
+});
+
+router.get("/admin/visitor", function (req, res) {
+	Visitors.find()
+		.then((returnedVisitorsDataFromDb) => {
+			res.render("./admin/visitor/home", { returnedVisitorsDataFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.redirect("/admin");
+		});
+});
+
+router.get("/admin/visitor/show/:id", function (req, res) {
+	Visitors.findById(req.params.id)
+		.then((returnedVisitorDataFromDb) => {
+			res.render("./admin/visitor/show", { returnedVisitorDataFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.redirect("/admin/visitor");
+		});
+});
+
+router.get("/admin/visitor/blacklist/:id", function (req, res) {
+	Visitors.findById(req.params.id).then((returnedVisitorDataFromDb) => {
+		const currentStatus = returnedVisitorDataFromDb.isBlacklisted;
+		returnedVisitorDataFromDb.isBlacklisted = !currentStatus;
+		returnedVisitorDataFromDb
+			.save()
+			.then(() => {
+				res.redirect(`/admin/visitor/show/${returnedVisitorDataFromDb.id}`);
+			})
+			.catch((err) => {
+				console.log(err);
+				res.redirect(`/admin/visitor/show/${returnedVisitorDataFromDb.id}`);
+			});
+	});
 });
 // =================================
 // AUTH Routes

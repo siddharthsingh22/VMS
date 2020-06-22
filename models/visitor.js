@@ -7,6 +7,8 @@ const visitingRecordSchema = new mongoose.Schema({
 	expecDeparture: { type: String, required: true },
 	actualArrival: { type: String },
 	actualDeparture: { type: String },
+	residentEmail: { type: String, required: true },
+	residentName: { type: String, required: true },
 });
 
 const VisitingRecords = mongoose.model("VisitingRecord", visitingRecordSchema);

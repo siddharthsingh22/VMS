@@ -1,0 +1,44 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container">
+	<div class="jumbotron mt-5" style="padding: 5vh 8vw;">
+		<div class="row">
+			<div class="col-12 col-md-8">
+				<h1 class="display-4" style="font-size: 2.5rem;">Name : <%= returnedVisitorDataFromDb.name %></h1>
+				<h1 class="display-4" style="font-size: 2.5rem;">Aadhar Id : <%= returnedVisitorDataFromDb.aadharId %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Blacklist Status : <%= returnedVisitorDataFromDb.isBlacklisted %></h1>
+
+				<a href="/admin/visitor" class="btn btn-success mt-4 mb-2">Go Back</a>
+				<% if(!returnedVisitorDataFromDb.isBlacklisted){ %>
+				<a href="/admin/visitor/blacklist/<%= returnedVisitorDataFromDb._id %>" class="btn btn-danger mt-4 mb-2">Blacklist Visitor</a>
+				<% } %> <% if(returnedVisitorDataFromDb.isBlacklisted){ %>
+				<a href="/admin/visitor/blacklist/<%= returnedVisitorDataFromDb._id %>" class="btn btn-success mt-4 mb-2">Blacklist Visitor</a>
+				<% } %>
+			</div>
+		</div>
+	</div>
+	<div style="max-width: 100%; overflow: auto;">
+		<table class="table mt-3 table-hover table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" class="text-center">Resident Name</th>
+					<th scope="col" class="text-center">Resident Email</th>
+					<th scope="col" class="text-center">Purpose</th>
+					<th scope="col" class="text-center">Actual Arrival</th>
+					<th scope="col" class="text-center">Actual Departure</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% returnedVisitorDataFromDb.visitingRecordArray.forEach((eachVisitRecord) => { %>
+				<tr>
+					<td class="text-center"><%= eachVisitRecord.residentName %></td>
+					<td class="text-center"><%= eachVisitRecord.residentEmail %></td>
+					<td class="text-center"><%= eachVisitRecord.purpose %></td>
+					<td class="text-center"><%= eachVisitRecord.actualArrival %></td>
+					<td class="text-center"><%= eachVisitRecord.actualDeparture %></td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%- include("../../partials/footer") %>

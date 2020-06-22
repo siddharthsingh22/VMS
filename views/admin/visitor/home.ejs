@@ -1,0 +1,38 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container mt-3">
+	<div style="display: flex; justify-content: flex-start;">
+		<a href="/admin" class="btn btn-info">Go Back</a>
+	</div>
+	<div style="max-width: 100%; overflow: auto;">
+		<table class="table mt-3 table-hover table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" class="text-center">Name</th>
+					<th scope="col" class="text-center">Aadhar Number</th>
+					<th scope="col" class="text-center">Blacklist Status</th>
+					<th scope="col" class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% returnedVisitorsDataFromDb.forEach((eachSecurityData) => { %>
+				<tr>
+					<th scope="row" class="text-center"><%= eachSecurityData.name %></th>
+
+					<td class="text-center"><%= eachSecurityData.aadharId %></td>
+					<td class="text-center"><%= eachSecurityData.isBlacklisted %></td>
+
+					<td class="text-center">
+						<a href="/admin/visitor/show/<%= eachSecurityData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="View Visitor Data"
+							><i class="fas fa-info-circle mr-3"></i
+						></a>
+						<a href="/admin/visitor/blacklist/<%= eachSecurityData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Toggle Blacklist Status"
+							><i class="fas fa-user-slash"></i
+						></a>
+					</td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%- include("../../partials/footer" )%>

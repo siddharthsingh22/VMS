@@ -17,20 +17,20 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% returnedSecuritiesDataFromDb.forEach((eachSecurityData) => { %>
+				<% returnedSecuritiesDataFromDb.forEach((eachVisitorData) => { %>
 				<tr>
-					<th scope="row" class="text-center"><%= eachSecurityData.name %></th>
-					<td class="text-center"><%= eachSecurityData.id %></td>
-					<td class="text-center"><%= eachSecurityData.aadharNo %></td>
-					<td class="text-center"><%= eachSecurityData.phoneNo %></td>
+					<th scope="row" class="text-center"><%= eachVisitorData.name %></th>
+					<td class="text-center"><%= eachVisitorData.id %></td>
+					<td class="text-center"><%= eachVisitorData.aadharNo %></td>
+					<td class="text-center"><%= eachVisitorData.phoneNo %></td>
 					<td class="text-center">
-						<a href="/admin/securityPersonnel/show/<%= eachSecurityData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="View Security Personnel Data"
+						<a href="/admin/securityPersonnel/show/<%= eachVisitorData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="View Security Personnel Data"
 							><i class="fas fa-info-circle mr-3"></i
 						></a>
-						<a href="/admin/securityPersonnel/edit/<%= eachSecurityData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Edit Security Personnel Data"
+						<a href="/admin/securityPersonnel/edit/<%= eachVisitorData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Edit Security Personnel Data"
 							><i class="fas fa-user-edit mr-3"></i
 						></a>
-						<a href="/admin/securityPersonnel/delete/<%= eachSecurityData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Delete Security Personnel Account"
+						<a href="/admin/securityPersonnel/delete/<%= eachVisitorData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Delete Security Personnel Account"
 							><i class="fas fa-trash-alt"></i
 						></a>
 					</td>
