@@ -5,6 +5,7 @@ const express = require("express"),
 	session = require("express-session"),
 	MongoStore = require("connect-mongo")(session),
 	Admins = require("../models/admin"),
+	Securities = require("../models/security"),
 	Dom_helps = require("../models/dom_help"),
 	mongoose = require("mongoose");
 
@@ -138,6 +139,101 @@ router.post("/admin/dom_help/edit/:id", function (req, res) {
 		})
 		.catch((err) => {
 			console.log(err);
+		});
+});
+
+router.get("/admin/securityPersonnel", function (req, res) {
+	Securities.find()
+		.then((returnedSecuritiesDataFromDb) => {
+			res.render("./admin/securityPersonnel/home", { returnedSecuritiesDataFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
+router.get("/admin/securityPersonnel/show/:id", function (req, res) {
+	Securities.findById(req.params.id)
+		.then((returnedSecurityDataFromDb) => {
+			res.render("./admin/securityPersonnel/show", { returnedSecurityDataFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
+router.get("/admin/securityPersonnel/new", function (req, res) {
+	res.render("./admin/securityPersonnel/new");
+});
+
+router.post("/admin/securityPersonnel", function (req, res) {
+	const cover = JSON.parse(req.body.securityImage);
+	Securities.create({
+		name: req.body.new.name,
+		designation: req.body.new.designation,
+		aadharNo: req.body.new.aadharNo,
+		address: req.body.new.address,
+		phoneNo: req.body.new.phoneNo,
+		remarks: req.body.new.remarks,
+		password: req.body.new.password,
+		id: Math.floor(100000 + 900000 * Math.random()),
+		image: new Buffer.from(cover.data, "base64"),
+		imageType: cover.type,
+	})
+		.then((savedSecurityPersonnelInDb) => {
+			res.render("./admin/securityPersonnel/show", { returnedSecurityDataFromDb: savedSecurityPersonnelInDb });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.render("./admin/securityPersonnel/new");
+		});
+});
+
+router.get("/admin/securityPersonnel/edit/:id", function (req, res) {
+	Securities.findById(req.params.id)
+		.then((returnedSecurityDataFromDb) => {
+			res.render("./admin/securityPersonnel/edit", { returnedSecurityDataFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.redirect("/admin/securityPersonnel");
+		});
+});
+
+router.post("/admin/securityPersonnel/edit/:id", function (req, res) {
+	const cover = JSON.parse(req.body.securityImage);
+
+	Securities.findByIdAndUpdate(
+		req.params.id,
+		{
+			name: req.body.edit.name,
+			designation: req.body.edit.designation,
+			aadharNo: req.body.edit.aadharNo,
+			address: req.body.edit.address,
+			phoneNo: req.body.edit.phoneNo,
+			remarks: req.body.edit.remarks,
+			password: req.body.edit.password,
+			image: new Buffer.from(cover.data, "base64"),
+			imageType: cover.type,
+		},
+		{ new: true, useFindAndModify: false }
+	)
+		.then((updatedSecurityFromDb) => {
+			res.render("./admin/securityPersonnel/show", { returnedSecurityDataFromDb: updatedSecurityFromDb });
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
+router.get("/admin/securityPersonnel/delete/:id", function (req, res) {
+	Securities.findByIdAndRemove(req.params.id, { useFindAndModify: false })
+		.then(() => {
+			res.redirect("/admin/securityPersonnel");
+		})
+		.catch((err) => {
+			console.log(err);
+			res.redirect("/admin/securityPersonnel");
 		});
 });
 // =================================
