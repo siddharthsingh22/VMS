@@ -1,0 +1,52 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container">
+	<div class="row" style="align-items: center; flex-direction: column;">
+		<div class="col-md-10 border border-primary pt-4 pb-4 pr-3 pl-3 mt-3 mb-4">
+			<form action="/admin/securityPersonnel/edit/<%= returnedSecurityDataFromDb._id %>" method="POST">
+				<div class="row" style="display: flex;">
+					<div class="col-md-8">
+						<div class="form-group">
+							<label for="fullName">Full Name</label>
+							<input type="text" class="form-control" id="fullName" value="<%= returnedSecurityDataFromDb.name %>" name="edit[name]" />
+						</div>
+						<div class="form-group">
+							<label for="designation">Designation</label>
+							<input type="text" class="form-control" id="designation" value="<%= returnedSecurityDataFromDb.designation %>" name="edit[designation]" />
+						</div>
+						<div class="form-group">
+							<label for="aadharNumber">Aadhar Number</label>
+							<input type="text" class="form-control" id="aadharNumber" value="<%= returnedSecurityDataFromDb.aadharNo %>" name="edit[aadharNo]" />
+						</div>
+						<div class="form-group">
+							<label for="address">Address</label>
+							<textarea class="form-control" id="address" rows="2" name="edit[address]"><%= returnedSecurityDataFromDb.address %></textarea>
+						</div>
+						<div class="form-group mb-4">
+							<label for="phoneNumber">Phone Number</label>
+							<input type="text" class="form-control" id="phoneNumber" value="<%= returnedSecurityDataFromDb.phoneNo %>" name="edit[phoneNo]" />
+						</div>
+						<div class="form-group">
+							<label for="remarks">Remarks</label>
+							<textarea class="form-control" id="remarks" rows="2" placeholder="Remarks" name="edit[remarks]"><%= returnedSecurityDataFromDb.remarks %></textarea>
+						</div>
+						<div class="form-group mb-4">
+							<label for="password">Password</label>
+							<input type="text" class="form-control" id="password" placeholder="Password" name="edit[password]" required value="<%= returnedSecurityDataFromDb.password %>" />
+							<small id="password" class="form-text text-muted">Change previous password</small>
+						</div>
+					</div>
+					<div class="col-md-4 p-2">
+						<input id="securityImage" type="file" name="securityImage" class="filepond" />
+						<div style="display: flex; flex-direction: column; align-items: center;">
+							<label for="securityImage">Upload Security Personnel Image</label>
+							<small id="securityImage" class="form-text text-muted">The image size should be lesser than 4 MB</small>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<a href="/admin/securityPersonnel" class="btn btn-success">Go Back</a>
+			</form>
+		</div>
+	</div>
+</div>
+<%- include("../../partials/footer")%>

@@ -1,0 +1,22 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container">
+	<div class="jumbotron mt-5" style="padding: 5vh 8vw;">
+		<div class="row">
+			<div class="col-12 col-md-8">
+				<h1 class="display-4" style="font-size: 2.5rem;">Name : <%= returnedSecurityDataFromDb.name %></h1>
+				<h1 class="display-4" style="font-size: 2.5rem;">Id : <%= returnedSecurityDataFromDb.id %></h1>
+				<h1 class="display-4 mt-4" style="font-size: 1.2rem;">Aadhar Number : <%= returnedSecurityDataFromDb.aadharNo %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Address : <%= returnedSecurityDataFromDb.address %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Phone Number : <%= returnedSecurityDataFromDb.phoneNo %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Designation : <%= returnedSecurityDataFromDb.designation %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Remarks : <%= returnedSecurityDataFromDb.remarks %></h1>
+
+				<a href="/admin/securityPersonnel" class="btn btn-success mt-3 mb-2">Go Back</a>
+				<a href="/admin/securityPersonnel/edit/<%= returnedSecurityDataFromDb._id %>" class="btn btn-dark mt-3 mb-2">Edit</a>
+				<a href="/admin/securityPersonnel/delete/<%= returnedSecurityDataFromDb._id %>" class="btn btn-danger mt-3 mb-2">Delete</a>
+			</div>
+			<img class="col-12 col-md-4 mt-2 img-fluid rounded" src="<%= returnedSecurityDataFromDb.securityImagePath %>" alt="Security Personnel Image" style="height: 300px;" />
+		</div>
+	</div>
+</div>
+<%- include("../../partials/footer") %>

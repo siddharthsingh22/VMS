@@ -7,15 +7,15 @@
 					<div class="col-md-8">
 						<div class="form-group">
 							<label for="fullName">Full Name</label>
-							<input type="text" class="form-control" id="fullName" placeholder="Name" name="new[name]" />
+							<input type="text" class="form-control" id="fullName" placeholder="Name" name="new[name]" required />
 						</div>
 						<div class="form-group">
 							<label for="aadharNumber">Aadhar Number</label>
-							<input type="text" class="form-control" id="aadharNumber" placeholder="Aadhar Number" name="new[aadharNo]" />
+							<input type="text" class="form-control" id="aadharNumber" placeholder="Aadhar Number" name="new[aadharNo]" required />
 						</div>
 						<div class="form-group">
 							<label for="address">Address</label>
-							<textarea class="form-control" id="address" rows="3" placeholder="Complete Address" name="new[address]"></textarea>
+							<textarea class="form-control" id="address" rows="3" placeholder="Complete Address" name="new[address]" required></textarea>
 						</div>
 						<div class="form-group mb-4">
 							<label for="phoneNumber">Phone Number</label>
@@ -23,7 +23,7 @@
 						</div>
 					</div>
 					<div class="col-md-4 p-2">
-						<input id="dom_helpImage" type="file" name="cover" class="filepond" />
+						<input id="dom_helpImage" type="file" name="cover" class="filepond" required />
 						<div style="display: flex; flex-direction: column; align-items: center;">
 							<label for="dom_helpImage">Upload Domestic Help Image</label>
 							<small id="dom_helpImage" class="form-text text-muted">The image should be smaller than 4 MB</small>
