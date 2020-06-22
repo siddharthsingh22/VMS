@@ -14,10 +14,15 @@ app.listen("3000", function (req, res) {
 	console.log("VMS server has started");
 });
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "10mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
+
+app.use(express.static("public"));
 // seedDb();
 app.use(require("./routes/resident"));
 app.use(require("./routes/security"));
+app.use(require("./routes/admin"));
 
 app.get("*", function (req, res) {
 	res.send("404 Page Not Found");

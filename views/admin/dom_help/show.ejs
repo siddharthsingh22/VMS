@@ -1,0 +1,38 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container">
+	<div class="jumbotron mt-5" style="padding: 5vh 8vw;">
+		<div class="row">
+			<div class="col-12 col-md-8">
+				<h1 class="display-4" style="font-size: 2.5rem;">Name : <%= returnedDom_helpDataFromDb.name %></h1>
+				<h1 class="display-4" style="font-size: 2.5rem;">Id : <%= returnedDom_helpDataFromDb.id %></h1>
+				<h1 class="display-4 mt-4" style="font-size: 1.2rem;">Phone Number : <%= returnedDom_helpDataFromDb.aadharNo %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Address : <%= returnedDom_helpDataFromDb.address %></h1>
+				<h1 class="display-4" style="font-size: 1.2rem;">Phone Number : <%= returnedDom_helpDataFromDb.phoneNo %></h1>
+
+				<a href="/admin/dom_help" class="btn btn-success mt-4 mb-2">Go Back</a>
+			</div>
+			<img class="col-12 col-md-4 mt-2 img-fluid rounded" src="<%= returnedDom_helpDataFromDb.coverImagePath %>" alt="Domestic Help Image" style="height: 300px;" />
+		</div>
+	</div>
+	<div style="max-width: 100%; overflow: auto;">
+		<table class="table mt-3 table-hover table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" style="width: 30%;" class="text-center">Date</th>
+					<th scope="col" style="width: 30%;" class="text-center">Check In</th>
+					<th scope="col" style="width: 30%;" class="text-center">Check Out</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% returnedDom_helpDataFromDb.timeStamps.forEach((eachDayData) => { %>
+				<tr>
+					<td class="text-center"><%= eachDayData.date %></td>
+					<td class="text-center"><%= eachDayData.checkIn %></td>
+					<td class="text-center"><%= eachDayData.checkOut %></td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%- include("../../partials/footer") %>

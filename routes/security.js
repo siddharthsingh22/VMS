@@ -50,8 +50,6 @@ const redirectSecurity = (req, res, next) => {
 // =================================
 
 router.get("/security", redirectLogin, function (req, res) {
-	// const today = moment();
-	// console.log(today.format("hh:mm:ss"));
 	res.render("./security/home", { error: "", success: "", error2: "", success2: "" });
 });
 
@@ -60,10 +58,11 @@ router.post("/security/dom_help", function (req, res) {
 		Dom_helps.findOne({ id: req.body.dom_helpId })
 			.then((returnedDom_helpDataFromDb) => {
 				const len = returnedDom_helpDataFromDb.timeStamps.length;
-				if (!returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
+				if (len !== 0 && !returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
 					res.render("./security/home", { success: "", error: "Domestic Help has already checked-in. Check-out before trying to check-in again.", error2: "", success2: "" });
 				} else {
 					const today = moment();
+					console.log(returnedDom_helpDataFromDb);
 					returnedDom_helpDataFromDb.timeStamps.push({
 						date: today.format("dddd Do MMMM, YYYY"),
 						checkIn: today.format("hh:mm:ss A"),

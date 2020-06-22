@@ -2,6 +2,7 @@ const mongoose = require("mongoose"),
 	Dom_helps = require("./models/dom_help"),
 	Visitors = require("./models/visitor"),
 	Security = require("./models/security"),
+	Admins = require("./models/admin"),
 	Residents = require("./models/resident");
 const Securities = require("./models/security");
 
@@ -37,250 +38,150 @@ const seedDb = () => {
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 1",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "1234",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 2",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "12345",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 3",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "2345",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 4",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "45673456",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 5",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "23452345456",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 6",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "111111111",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 7",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "1222222222",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 8",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "3333333333",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 9",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "4444444444",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			},
 	// 			{
 	// 				id: Math.floor(100000 + 900000 * Math.random()),
 	// 				name: "Help 10",
-	// 				aadharNo: "12341234",
+	// 				aadharNo: "55555555",
 	// 				address: "Taj Mahal, Agra",
 	// 				image: "https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561__340.png",
 	// 				phoneNo: "1001001001",
 	// 				timeStamps: [
 	// 					{
-	// 						date: "June 12",
-	// 						checkIn: "7:10 am",
-	// 						checkOut: "2:30 pm",
-	// 					},
-	// 					{
-	// 						date: "June 11",
-	// 						checkIn: "8 am",
-	// 						checkOut: "5 pm",
-	// 					},
-	// 					{
-	// 						date: "June 10",
-	// 						checkIn: "7 am",
-	// 						checkOut: "3pm",
+	// 						// date: "Thursday 17th June, 2020",
+	// 						checkIn: "9:41:18 AM",
+	// 						checkOut: "10:42:02 PM",
 	// 					},
 	// 				],
 	// 			}
@@ -364,6 +265,17 @@ const seedDb = () => {
 	// })
 	// 	.then((returnedSecurityFromDb) => {
 	// 		console.log(returnedSecurityFromDb);
+	// 	})
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 	});
+	// Admins.create({
+	// 	name: "Admin One",
+	// 	email: "admin@adani.com",
+	// 	password: "1234",
+	// })
+	// 	.then((returnedAdminFromDb) => {
+	// 		console.log(returnedAdminFromDb);
 	// 	})
 	// 	.catch((err) => {
 	// 		console.log(err);

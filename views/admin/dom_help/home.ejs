@@ -1,0 +1,42 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container mt-5">
+	<div style="max-width: 100%; overflow: auto;">
+		<table class="table mt-3 table-hover table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col" class="text-center">Name</th>
+					<th scope="col" class="text-center">Id No.</th>
+					<th scope="col" class="text-center">Aadhar Number</th>
+					<th scope="col" class="text-center">Phone Number</th>
+					<th scope="col" class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% returnedDom_helpDataFromDb.forEach((eachDom_helpData) => { %>
+				<tr>
+					<th scope="row" class="text-center"><%= eachDom_helpData.name %></th>
+					<td class="text-center"><%= eachDom_helpData.id %></td>
+					<td class="text-center"><%= eachDom_helpData.aadharNo %></td>
+					<td class="text-center"><%= eachDom_helpData.phoneNo %></td>
+					<td class="text-center">
+						<a href="/admin/dom_help/show/<%= eachDom_helpData.id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="View Domestic Help Data"
+							><i class="fas fa-info-circle mr-3"></i
+						></a>
+						<a href="/admin/dom_help/edit/<%= eachDom_helpData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Edit Domestic Help Data"
+							><i class="fas fa-user-edit mr-3"></i
+						></a>
+						<a href="/admin/dom_help/delete/<%= eachDom_helpData._id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="Delete Domestic Help Account"
+							><i class="fas fa-trash-alt"></i
+						></a>
+					</td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+	<div style="display: flex; justify-content: flex-end;">
+		<a href="/admin" class="btn btn-info mr-3">Go Back</a>
+		<a href="/admin/dom_help/new" class="btn btn-success">Register New Domestic Help</a>
+	</div>
+</div>
+<%- include("../../partials/footer" )%>
