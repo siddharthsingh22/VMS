@@ -121,8 +121,6 @@ router.get("/admin/dom_help/edit/:id", function (req, res) {
 });
 
 router.post("/admin/dom_help/edit/:id", function (req, res) {
-	const cover = JSON.parse(req.body.cover);
-
 	Dom_helps.findByIdAndUpdate(
 		req.params.id,
 		{
@@ -130,13 +128,25 @@ router.post("/admin/dom_help/edit/:id", function (req, res) {
 			phoneNo: req.body.edit.phoneNo,
 			address: req.body.edit.address,
 			aadharNo: req.body.edit.aadharNo,
-			image: new Buffer.from(cover.data, "base64"),
-			imageType: cover.type,
 		},
-		{ new: true }
+		{ new: true, useFindAndModify: false }
 	)
 		.then((updatedDom_helpFromDb) => {
-			res.render("./admin/dom_help/show", { returnedDom_helpDataFromDb: updatedDom_helpFromDb });
+			if (req.body.cover) {
+				const cover = JSON.parse(req.body.cover);
+				(updatedDom_helpFromDb.image = new Buffer.from(cover.data, "base64")), (updatedDom_helpFromDb.imageType = cover.type);
+				updatedDom_helpFromDb
+					.save()
+					.then((updatedDom_helpFromDb) => {
+						res.render("./admin/dom_help/show", { returnedDom_helpDataFromDb: updatedDom_helpFromDb });
+					})
+					.catch((err) => {
+						console.log(err);
+						res.redirect("/admin/dom_help");
+					});
+			} else {
+				res.render("./admin/dom_help/show", { returnedDom_helpDataFromDb: updatedDom_helpFromDb });
+			}
 		})
 		.catch((err) => {
 			console.log(err);
@@ -202,8 +212,6 @@ router.get("/admin/securityPersonnel/edit/:id", function (req, res) {
 });
 
 router.post("/admin/securityPersonnel/edit/:id", function (req, res) {
-	const cover = JSON.parse(req.body.securityImage);
-
 	Securities.findByIdAndUpdate(
 		req.params.id,
 		{
@@ -214,13 +222,25 @@ router.post("/admin/securityPersonnel/edit/:id", function (req, res) {
 			phoneNo: req.body.edit.phoneNo,
 			remarks: req.body.edit.remarks,
 			password: req.body.edit.password,
-			image: new Buffer.from(cover.data, "base64"),
-			imageType: cover.type,
 		},
 		{ new: true, useFindAndModify: false }
 	)
 		.then((updatedSecurityFromDb) => {
-			res.render("./admin/securityPersonnel/show", { returnedSecurityDataFromDb: updatedSecurityFromDb });
+			if (req.body.securityImage) {
+				const cover = JSON.parse(req.body.securityImage);
+				(updatedSecurityFromDb.image = new Buffer.from(cover.data, "base64")), (updatedSecurityFromDb.imageType = cover.type);
+				updatedSecurityFromDb
+					.save()
+					.then((updatedSecurityFromDb) => {
+						res.render("./admin/securityPersonnel/show", { returnedSecurityDataFromDb: updatedSecurityFromDb });
+					})
+					.catch((err) => {
+						console.log(err);
+						res.redirect("/admin/securityPersonnel");
+					});
+			} else {
+				res.render("./admin/securityPersonnel/show", { returnedSecurityDataFromDb: updatedSecurityFromDb });
+			}
 		})
 		.catch((err) => {
 			console.log(err);

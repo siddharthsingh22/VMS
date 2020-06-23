@@ -11,7 +11,7 @@
 				<% if(!returnedVisitorDataFromDb.isBlacklisted){ %>
 				<a href="/admin/visitor/blacklist/<%= returnedVisitorDataFromDb._id %>" class="btn btn-danger mt-4 mb-2">Blacklist Visitor</a>
 				<% } %> <% if(returnedVisitorDataFromDb.isBlacklisted){ %>
-				<a href="/admin/visitor/blacklist/<%= returnedVisitorDataFromDb._id %>" class="btn btn-success mt-4 mb-2">Blacklist Visitor</a>
+				<a href="/admin/visitor/blacklist/<%= returnedVisitorDataFromDb._id %>" class="btn btn-success mt-4 mb-2">Remove From Blacklist</a>
 				<% } %>
 			</div>
 		</div>
