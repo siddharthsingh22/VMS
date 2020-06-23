@@ -171,10 +171,9 @@ router.post("/security/visitor", function (req, res) {
 						if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
 							eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm");
 							const departureTime = eachVisitingRecord.expecDeparture;
-
 							returnedVisitorFromDb
 								.save()
-								.then(() => {
+								.then((returnedVisitorFromDb) => {
 									res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected departure time is ${departureTime}` });
 								})
 								.catch((err) => {

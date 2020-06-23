@@ -19,14 +19,22 @@
 				<tr>
 					<th scope="row" class="text-center"><%= eachDom_HelpData.id %></th>
 					<td class="text-center"><%= eachDom_HelpData.name %></td>
-
+					<% if(len !== 0){ %>
 					<td class="text-center">
 						<%= eachDom_HelpData.timeStamps[len-1].date %>
 					</td>
+
 					<td class="text-center">
 						<%= eachDom_HelpData.timeStamps[len-1].checkIn %>
 					</td>
 					<td class="text-center"><%= eachDom_HelpData.timeStamps[len-1].checkOut %></td>
+					<% } %> <% if(len === 0){ %>
+					<td class="text-center"></td>
+
+					<td class="text-center"></td>
+					<td class="text-center"></td>
+					<% } %>
+
 					<td class="text-center">
 						<a href="/user/dom_help/show/<%= eachDom_HelpData.id %>" class="text-dark" data-toggle="tooltip" data-placement="top" title="View Domestic Help Data"
 							><i class="fas fa-info-circle mr-3"></i
