@@ -5,8 +5,14 @@
 			<div class="p-3 pb-4 mt-5" style="border: 1px solid rgba(0, 0, 0, 0.1); background-color: #e4e4e4;">
 				<h1 class="display-5 mb-4 text-center" style="font-weight: 100; font-size: 2.2rem;">Request New Visitor</h1>
 				<form action="/user/visitor/new" method="POST" style="width: 100%;">
+					<% if(error){ %>
+					<div class="alert alert-danger text-center" role="alert">
+						<%= error %>
+					</div>
+					<% } %>
 					<div class="form-group">
-						<input type="text" name="new[aadharId]" placeholder="Visitor Aadhar Id" class="form-control" required />
+						<input id="aadharId" type="text" name="new[aadharId]" placeholder="Visitor Aadhar Id" class="form-control" required pattern="[0-9]{12}" />
+						<small class="form-text text-muted ml-1">Please Enter 12 digit Aadhar Number.</small>
 					</div>
 					<div class="form-group">
 						<input type="text" name="new[name]" placeholder="Visitor Name" class="form-control" required />

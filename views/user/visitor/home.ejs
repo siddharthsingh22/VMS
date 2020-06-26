@@ -15,7 +15,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<% dataObject.forEach((eachEntry) => { %>
+					<% dataObject.slice().reverse().forEach((eachEntry) => { %>
 					<tr>
 						<th scope="row" class="text-center"><%= eachEntry.aadharId%></th>
 						<td class="text-center"><%= eachEntry.name%></td>

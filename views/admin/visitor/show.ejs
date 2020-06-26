@@ -28,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% returnedVisitorDataFromDb.visitingRecordArray.forEach((eachVisitRecord) => { %>
+				<% returnedVisitorDataFromDb.visitingRecordArray.slice().reverse().forEach((eachVisitRecord) => { %>
 				<tr>
 					<td class="text-center"><%= eachVisitRecord.residentName %></td>
 					<td class="text-center"><%= eachVisitRecord.residentEmail %></td>
