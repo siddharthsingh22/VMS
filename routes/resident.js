@@ -183,6 +183,8 @@ router.post("/user/visitor/new", function (req, res) {
 					otp: randomNumber,
 					residentName: req.session.userName,
 					residentEmail: req.session.userEmail,
+					actualArrival: "",
+					actualDeparture: "",
 				});
 				returnedExistingVisitorFromDb.save().then((updatedExistingVisitorFromDb) => {
 					Residents.findOne({ email: req.session.userEmail })
@@ -220,6 +222,8 @@ router.post("/user/visitor/new", function (req, res) {
 						otp: randomNumber,
 						residentName: req.session.userName,
 						residentEmail: req.session.userEmail,
+						actualArrival: "",
+						actualDeparture: "",
 					});
 					returnedNewVisitorFromDb.save().then(() => {
 						Residents.findOne({ email: req.session.userEmail })
