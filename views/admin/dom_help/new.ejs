@@ -11,7 +11,8 @@
 						</div>
 						<div class="form-group">
 							<label for="aadharNumber">Aadhar Number</label>
-							<input type="text" class="form-control" id="aadharNumber" placeholder="Aadhar Number" name="new[aadharNo]" required />
+							<input type="text" class="form-control" id="aadharNumber" placeholder="Aadhar Number" name="new[aadharNo]" required pattern="[0-9]{12}" />
+							<small class="form-text text-muted ml-1">Please Enter 12 digit Aadhar Number.</small>
 						</div>
 						<div class="form-group">
 							<label for="address">Address</label>
@@ -19,7 +20,8 @@
 						</div>
 						<div class="form-group mb-4">
 							<label for="phoneNumber">Phone Number</label>
-							<input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number" name="new[phoneNo]" />
+							<input type="text" class="form-control" id="phoneNumber" placeholder="Enter Phone Number" name="new[phoneNo]" pattern="[0-9]{10}" />
+							<small class="form-text text-muted ml-1">Please Enter 10 digit Phone Number.</small>
 						</div>
 					</div>
 					<div class="col-md-4 p-2">

@@ -13,7 +13,7 @@
 		<form method="POST" action="/security/dom_help">
 			<div class="form-group">
 				<label for="exampleInputEmail1">For Domestic Help</label>
-				<input type="string" name="dom_helpId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" required />
+				<input type="string" name="dom_helpId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Domestic Help Id" required pattern="[0-9]{6}" />
 				<small id="emailHelp" class="form-text text-muted">Enter the 6 digit domestic help id</small>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
@@ -41,10 +41,10 @@
 		<form method="POST" action="/security/visitor">
 			<div class="form-group">
 				<label>For Visitors</label>
-				<input type="string" class="form-control" placeholder="Visitor Aadhar Id" name="visitorAadharId" required />
-				<small class="form-text text-muted">Enter the Visitors Aadhar Id</small>
+				<input type="string" class="form-control" placeholder="Visitor Aadhar Id" name="visitorAadharId" required pattern="[0-9]{12}" />
+				<small class="form-text text-muted">Enter the 12 Digit Visitors Aadhar Id.</small>
 				<br />
-				<input type="string" class="form-control" placeholder="Visitor OTP" name="visitorOtp" required />
+				<input type="string" class="form-control" placeholder="Visitor OTP" name="visitorOtp" required pattern="[0-9]{6}" />
 				<small class="form-text text-muted">Enter the 6 digit visitor OTP</small>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">

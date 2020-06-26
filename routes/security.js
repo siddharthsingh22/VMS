@@ -62,7 +62,7 @@ router.post("/security/dom_help", function (req, res) {
 					res.render("./security/home", { success: "", error: "Domestic Help has already checked-in. Check-out before trying to check-in again.", error2: "", success2: "" });
 				} else {
 					const today = moment();
-					console.log(returnedDom_helpDataFromDb);
+
 					returnedDom_helpDataFromDb.timeStamps.push({
 						date: today.format("dddd Do MMMM, YYYY"),
 						checkIn: today.format("hh:mm:ss A"),
@@ -137,24 +137,20 @@ router.post("/security/visitor", function (req, res) {
 			.then((returnedVisitorFromDb) => {
 				if (!returnedVisitorFromDb.isBlacklisted) {
 					returnedVisitorFromDb.visitingRecordArray.forEach((eachVisitingRecord) => {
-						if (!eachVisitingRecord.actualArrival) {
-							if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
-								eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm");
-								const arrivalTime = eachVisitingRecord.expecArrival;
-								returnedVisitorFromDb
-									.save()
-									.then(() => {
-										res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected arrival time is ${arrivalTime}` });
-									})
-									.catch((err) => {
-										console.log(err);
-										res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
-									});
-							}
-						} else {
-							res.render("./security/home", { error: "", success: "", error2: "OTP Invalid", success2: "" });
+						if (eachVisitingRecord.otp == req.body.visitorOtp && eachVisitingRecord.actualArrival == undefined) {
+							eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm");
+							const arrivalTime = eachVisitingRecord.expecArrival;
+							returnedVisitorFromDb
+								.save()
+								.then((returnedData) => {
+									res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected arrival time : ${arrivalTime}` });
+								})
+								.catch((err) => {
+									res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
+								});
 						}
 					});
+					// not checking for already used otps or the case in which entered otp doesn't matches any otp in the db
 				} else {
 					res.render("./security/home", { success: "", error: "", success2: "", error2: "VISITOR IS BLACKLISTED. CONTACT ADMIN." });
 				}
@@ -167,22 +163,19 @@ router.post("/security/visitor", function (req, res) {
 		Visitors.findOne({ aadharId: req.body.visitorAadharId })
 			.then((returnedVisitorFromDb) => {
 				returnedVisitorFromDb.visitingRecordArray.forEach((eachVisitingRecord) => {
-					if (!eachVisitingRecord.actualDeparture && eachVisitingRecord.actualArrival) {
-						if (eachVisitingRecord.otp === parseInt(req.body.visitorOtp)) {
-							eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm");
-							const departureTime = eachVisitingRecord.expecDeparture;
-							returnedVisitorFromDb
-								.save()
-								.then((returnedVisitorFromDb) => {
-									res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected departure time is ${departureTime}` });
-								})
-								.catch((err) => {
-									res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
-								});
-						}
-					} else {
-						res.render("./security/home", { error: "", success: "", error2: "OTP Invalid", success2: "" });
+					if (eachVisitingRecord.otp == req.body.visitorOtp && eachVisitingRecord.actualDeparture == undefined) {
+						eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm");
+						const departureTime = eachVisitingRecord.expecDeparture;
+						returnedVisitorFromDb
+							.save()
+							.then((returnedData) => {
+								res.render("./security/home", { error: "", success: "", error2: "", success2: `Done! Good to go. Expected departure time : ${departureTime}` });
+							})
+							.catch((err) => {
+								res.render("./security/home", { error: "", success: "", error2: "Please try again.", success2: "" });
+							});
 					}
+					// not checking for previous otp or the case in which the entered otp doesn't matched any past otp in the db
 				});
 			})
 			.catch((err) => {

@@ -24,7 +24,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% returnedDom_HelpDataFromDb.timeStamps.forEach((eachDayData) => { %>
+				<% returnedDom_HelpDataFromDb.timeStamps.slice().reverse().forEach((eachDayData) => { %>
 				<tr>
 					<td class="text-center"><%= eachDayData.date %></td>
 					<td class="text-center"><%= eachDayData.checkIn %></td>

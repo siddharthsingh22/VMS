@@ -168,39 +168,42 @@ router.get("/user/visitor", redirectLogin, function (req, res) {
 // ==================================
 
 router.get("/user/visitor/new", redirectLogin, function (req, res) {
-	res.render("./user/visitor/new");
+	res.render("./user/visitor/new", { error: "" });
 });
 
 router.post("/user/visitor/new", function (req, res) {
 	Visitors.findOne({ aadharId: req.body.new.aadharId })
 		.then((returnedExistingVisitorFromDb) => {
-			const randomNumber = Math.floor(100000 + Math.random() * 900000);
-
-			returnedExistingVisitorFromDb.visitingRecordArray.push({
-				purpose: req.body.new.purpose,
-				expecArrival: req.body.new.expecArrivalTime.replace("T", ", "),
-				expecDeparture: req.body.new.expecDepartureTime.replace("T", ", "),
-				otp: randomNumber,
-				residentName: req.session.userName,
-				residentEmail: req.session.userEmail,
-			});
-			returnedExistingVisitorFromDb.save().then((updatedExistingVisitorFromDb) => {
-				Residents.findOne({ email: req.session.userEmail })
-					.then((returnedResidentDataFromDb) => {
-						const len = updatedExistingVisitorFromDb.visitingRecordArray.length;
-						returnedResidentDataFromDb.visitorsArray.push({
-							visitorId: updatedExistingVisitorFromDb._id,
-							visitingId: updatedExistingVisitorFromDb.visitingRecordArray[len - 1]._id,
+			if (returnedExistingVisitorFromDb.isBlacklisted === false) {
+				const randomNumber = Math.floor(100000 + Math.random() * 900000);
+				returnedExistingVisitorFromDb.visitingRecordArray.push({
+					purpose: req.body.new.purpose,
+					expecArrival: req.body.new.expecArrivalTime.replace("T", ", "),
+					expecDeparture: req.body.new.expecDepartureTime.replace("T", ", "),
+					otp: randomNumber,
+					residentName: req.session.userName,
+					residentEmail: req.session.userEmail,
+				});
+				returnedExistingVisitorFromDb.save().then((updatedExistingVisitorFromDb) => {
+					Residents.findOne({ email: req.session.userEmail })
+						.then((returnedResidentDataFromDb) => {
+							const len = updatedExistingVisitorFromDb.visitingRecordArray.length;
+							returnedResidentDataFromDb.visitorsArray.push({
+								visitorId: updatedExistingVisitorFromDb._id,
+								visitingId: updatedExistingVisitorFromDb.visitingRecordArray[len - 1]._id,
+							});
+							return returnedResidentDataFromDb.save();
+						})
+						.then(() => {
+							res.redirect("/user/visitor");
+						})
+						.catch((err) => {
+							console.log(err);
 						});
-						return returnedResidentDataFromDb.save();
-					})
-					.then(() => {
-						res.redirect("/user/visitor");
-					})
-					.catch((err) => {
-						console.log(err);
-					});
-			});
+				});
+			} else {
+				res.render("./user/visitor/new", { error: "Requested Visitor is Blacklisted. Contact Admin." });
+			}
 		})
 
 		.catch((err) => {
