@@ -4,11 +4,23 @@ var express = require("express"),
 	seedDb = require("./seed"),
 	bodyParser = require("body-parser"),
 	mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/vms", {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+// mongoose.connect("mongodb://localhost/vms", {
+// 	useNewUrlParser: true,
+// 	useUnifiedTopology: true,
+// });
 require("dotenv").config();
+
+mongoose
+	.connect(`mongodb+srv://Apml:${DB_PASSWORD}@cluster0.wfpmr.mongodb.net/vms?retryWrites=true&w=majority`, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() => {
+		console.log("connected to db");
+	})
+	.catch((err) => {
+		console.log("There is an error" + err.message);
+	});
 
 app.listen("3000", function (req, res) {
 	console.log("VMS server has started");

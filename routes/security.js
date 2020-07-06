@@ -138,7 +138,7 @@ router.post("/security/visitor", function (req, res) {
 				returnedVisitorRecord.visitingRecordArray.forEach((eachVisitingRecord) => {
 					if (eachVisitingRecord.otp == req.body.visitorOtp) {
 						const arrivalTime = eachVisitingRecord.expecArrival;
-						eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm");
+						eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm A");
 						returnedVisitorRecord
 							.save()
 							.then(() => {
@@ -156,11 +156,12 @@ router.post("/security/visitor", function (req, res) {
 	}
 	if (req.body.radio2 === "checkOut") {
 		Visitors.findOne({ "visitingRecordArray.otp": req.body.visitorOtp, "visitingRecordArray.actualDeparture": "" })
+
 			.then((returnedVisitorRecord) => {
 				returnedVisitorRecord.visitingRecordArray.forEach((eachVisitingRecord) => {
 					if (eachVisitingRecord.otp == req.body.visitorOtp) {
 						const departureTime = eachVisitingRecord.expecDeparture;
-						eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm");
+						eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm A");
 						returnedVisitorRecord
 							.save()
 							.then(() => {
