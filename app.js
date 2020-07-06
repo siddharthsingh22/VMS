@@ -22,8 +22,8 @@ mongoose
 		console.log("There is an error " + err.message);
 	});
 
-app.listen("3000", function (req, res) {
-	console.log("VMS server has started");
+app.listen(process.env.PORT || 3000, function () {
+	console.log("server has started");
 });
 app.set("view engine", "ejs");
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
