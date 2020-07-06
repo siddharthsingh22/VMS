@@ -61,7 +61,7 @@ router.post("/security/dom_help", function (req, res) {
 				if (len !== 0 && !returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
 					res.render("./security/home", { success: "", error: "Domestic Help has already checked-in. Check-out before trying to check-in again.", error2: "", success2: "" });
 				} else {
-					const today = moment();
+					const today = moment().local();
 
 					returnedDom_helpDataFromDb.timeStamps.push({
 						date: today.format("dddd Do MMMM, YYYY"),
@@ -94,7 +94,7 @@ router.post("/security/dom_help", function (req, res) {
 			.then((returnedDom_helpDataFromDb) => {
 				const len = returnedDom_helpDataFromDb.timeStamps.length;
 				if (!returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
-					const today = moment();
+					const today = moment().local();
 					returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut = today.format("hh:mm:ss A");
 					returnedDom_helpDataFromDb
 						.save()
@@ -138,7 +138,7 @@ router.post("/security/visitor", function (req, res) {
 				returnedVisitorRecord.visitingRecordArray.forEach((eachVisitingRecord) => {
 					if (eachVisitingRecord.otp == req.body.visitorOtp) {
 						const arrivalTime = eachVisitingRecord.expecArrival;
-						eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm A");
+						eachVisitingRecord.actualArrival = moment().local().format("YYYY-MM-DD, HH:mm A");
 						returnedVisitorRecord
 							.save()
 							.then(() => {
@@ -161,7 +161,7 @@ router.post("/security/visitor", function (req, res) {
 				returnedVisitorRecord.visitingRecordArray.forEach((eachVisitingRecord) => {
 					if (eachVisitingRecord.otp == req.body.visitorOtp) {
 						const departureTime = eachVisitingRecord.expecDeparture;
-						eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm A");
+						eachVisitingRecord.actualDeparture = moment().local().format("YYYY-MM-DD, HH:mm A");
 						returnedVisitorRecord
 							.save()
 							.then(() => {
