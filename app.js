@@ -11,7 +11,7 @@ var express = require("express"),
 require("dotenv").config();
 
 mongoose
-	.connect(`mongodb+srv://Apml:${DB_PASSWORD}@cluster0.wfpmr.mongodb.net/vms?retryWrites=true&w=majority`, {
+	.connect(`mongodb+srv://Apml:Apml1234@cluster0.wfpmr.mongodb.net/vms?retryWrites=true&w=majority`, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
@@ -26,7 +26,6 @@ app.listen("3000", function (req, res) {
 	console.log("VMS server has started");
 });
 app.set("view engine", "ejs");
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
