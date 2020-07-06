@@ -11,7 +11,7 @@ var express = require("express"),
 require("dotenv").config();
 
 mongoose
-	.connect("mongodb+srv://Apml:Apml1234@cluster0.wfpmr.mongodb.net/test?retryWrites=true&w=majority", {
+	.connect("mongodb+srv://Apml:Apml@cluster0.wfpmr.mongodb.net/vms?retryWrites=true&w=majority", {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
@@ -19,7 +19,7 @@ mongoose
 		console.log("connected to db");
 	})
 	.catch((err) => {
-		console.log("There is an error" + err.message);
+		console.log("There is an error " + err.message);
 	});
 
 app.listen("3000", function (req, res) {
