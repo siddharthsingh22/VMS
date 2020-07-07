@@ -61,10 +61,10 @@ router.post("/security/dom_help", function (req, res) {
 				if (len !== 0 && !returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
 					res.render("./security/home", { success: "", error: "Domestic Help has already checked-in. Check-out before trying to check-in again.", error2: "", success2: "" });
 				} else {
-					const today = moment().tz("Asia/Kolkata");
+					const today = moment();
 
 					returnedDom_helpDataFromDb.timeStamps.push({
-						date: today.format("dddd Do MMMM, YYYY"),
+						date: today.tz("Asia/Kolkata").format("dddd Do MMMM, YYYY"),
 						checkIn: today.format("hh:mm:ss A"),
 					});
 					returnedDom_helpDataFromDb
