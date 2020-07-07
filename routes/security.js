@@ -64,7 +64,7 @@ router.post("/security/dom_help", function (req, res) {
 					const today = moment();
 
 					returnedDom_helpDataFromDb.timeStamps.push({
-						date: today.tz("Asia/Kolkata").format("dddd Do MMMM, YYYY"),
+						date: today.format("dddd Do MMMM, YYYY"),
 						checkIn: today.format("hh:mm:ss A"),
 					});
 					returnedDom_helpDataFromDb
@@ -94,7 +94,7 @@ router.post("/security/dom_help", function (req, res) {
 			.then((returnedDom_helpDataFromDb) => {
 				const len = returnedDom_helpDataFromDb.timeStamps.length;
 				if (!returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut) {
-					const today = moment().tz("Asia/Kolkata");
+					const today = moment();
 					returnedDom_helpDataFromDb.timeStamps[len - 1].checkOut = today.format("hh:mm:ss A");
 					returnedDom_helpDataFromDb
 						.save()
@@ -138,7 +138,7 @@ router.post("/security/visitor", function (req, res) {
 				returnedVisitorRecord.visitingRecordArray.forEach((eachVisitingRecord) => {
 					if (eachVisitingRecord.otp == req.body.visitorOtp) {
 						const arrivalTime = eachVisitingRecord.expecArrival;
-						eachVisitingRecord.actualArrival = moment().tz("Asia/Kolkata").format("YYYY-MM-DD, HH:mm A");
+						eachVisitingRecord.actualArrival = moment().format("YYYY-MM-DD, HH:mm A");
 						returnedVisitorRecord
 							.save()
 							.then(() => {
@@ -161,7 +161,7 @@ router.post("/security/visitor", function (req, res) {
 				returnedVisitorRecord.visitingRecordArray.forEach((eachVisitingRecord) => {
 					if (eachVisitingRecord.otp == req.body.visitorOtp) {
 						const departureTime = eachVisitingRecord.expecDeparture;
-						eachVisitingRecord.actualDeparture = moment().tz("Asia/Kolkata").format("YYYY-MM-DD, HH:mm A");
+						eachVisitingRecord.actualDeparture = moment().format("YYYY-MM-DD, HH:mm A");
 						returnedVisitorRecord
 							.save()
 							.then(() => {
