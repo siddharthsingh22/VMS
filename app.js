@@ -11,7 +11,7 @@ var express = require("express"),
 require("dotenv").config();
 
 mongoose
-	.connect("mongodb+srv://Apml:Apml@cluster0.wfpmr.mongodb.net/vms?retryWrites=true&w=majority", {
+	.connect(`mongodb+srv://Apml:${DB_PASSWORD}@cluster0.wfpmr.mongodb.net/vms?retryWrites=true&w=majority`, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
