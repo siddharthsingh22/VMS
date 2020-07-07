@@ -151,7 +151,7 @@ router.post("/security/visitor", function (req, res) {
 				});
 			})
 			.catch((err) => {
-				res.render("./security/home", { error: "", success: "", error2: "OTP Invalid", success2: "" });
+				res.render("./security/home", { error: "", success: "", error2: "Invalid OTP", success2: "" });
 			});
 	}
 	if (req.body.radio2 === "checkOut") {
@@ -174,7 +174,7 @@ router.post("/security/visitor", function (req, res) {
 				});
 			})
 			.catch((err) => {
-				res.render("./security/home", { error: "", success: "", error2: "OTP Invalid", success2: "" });
+				res.render("./security/home", { error: "", success: "", error2: "Invalid OTP", success2: "" });
 			});
 	}
 });
