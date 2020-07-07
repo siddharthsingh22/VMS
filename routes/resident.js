@@ -341,7 +341,7 @@ router.post("/user/reset", redirectUser, function (req, res) {
 				to: `${returnedUserFromDb.email}`,
 				subject: "Password reset link",
 				text: "",
-				html: `Hey ${returnedUserFromDb.name} !!<br><br> <button><a href="localhost:3000/user/reset/${returnedUserFromDb.email}/${token}">Click Here to reset your password</a></button><br><br>This is one time use link and is valid only for 1 hour.`,
+				html: `Hey ${returnedUserFromDb.name} !!<br><br> <button><a href="https://apml-visitor-management-system.herokuapp.com/user/reset/${returnedUserFromDb.email}/${token}">Click Here to reset your password</a></button><br><br>This is one time use link and is valid only for 1 hour.`,
 			};
 
 			transporter
