@@ -35,6 +35,9 @@ app.use(require("./routes/resident"));
 app.use(require("./routes/security"));
 app.use(require("./routes/admin"));
 
+app.get("/sitemap_index", function (req, res) {
+	res.render("sitemap_index");
+});
 app.get("*", function (req, res) {
 	res.send("404 Page Not Found");
 });
