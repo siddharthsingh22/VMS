@@ -300,10 +300,10 @@ router.post("/user/register", redirectUser, function (req, res) {
 					password: hash,
 				})
 					.then((returnedUserFromDb) => {
-						console.log("New User Created");
 						res.render("./user/login", { success: "Account Created !! Login Now", error: "" });
 					})
 					.catch((err) => {
+						console.log(err);
 						res.render("./user/register", { error: "Email already registered" });
 					});
 			})
