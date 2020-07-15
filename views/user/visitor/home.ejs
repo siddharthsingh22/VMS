@@ -2,6 +2,11 @@
 
 <div class="container">
 	<div class="mt-5">
+		<div style="display: flex; justify-content: flex-start;" class="mt-4 mb-2">
+			<a href="/user/visitor/new" class="btn btn-success mr-3">Request New Visitor</a>
+			<a href="/user" class="btn btn-info mr-3">Go Back</a>
+			<a href="/user/visitor" class="btn btn-danger">Refresh</a>
+		</div>
 		<div style="max-width: 100%; overflow: auto;">
 			<table class="table table-hover table-active">
 				<thead class="thead-dark">
@@ -27,13 +32,6 @@
 					<% }) %>
 				</tbody>
 			</table>
-		</div>
-
-		<div style="display: flex; justify-content: flex-end;" class="mt-4">
-			<a href="/user/visitor" class="btn btn-danger mr-3">Refresh</a>
-
-			<a href="/user" class="btn btn-info mr-3">Go Back</a>
-			<a href="/user/visitor/new" class="btn btn-success">Request New Visitor</a>
 		</div>
 	</div>
 </div>
