@@ -8,6 +8,8 @@ const express = require("express"),
 	Securities = require("../models/security"),
 	Dom_helps = require("../models/dom_help"),
 	Visitors = require("../models/visitor"),
+	moment = require("moment"),
+	Logs = require("../models/logs"),
 	mongoose = require("mongoose");
 
 router.use(
@@ -294,6 +296,42 @@ router.get("/admin/visitor/blacklist/:id", function (req, res) {
 				res.redirect(`/admin/visitor/show/${returnedVisitorDataFromDb.id}`);
 			});
 	});
+});
+
+router.get("/admin/stats", function (req, res) {
+	const dateToday = moment().format("dddd Do MMMM, YYYY");
+	Dom_helps.countDocuments({ "timeStamps.date": dateToday })
+		.then((returnedCountFromDb) => {
+			const visitorDate = moment().format("YYYY-MM-DD");
+
+			Visitors.countDocuments({ "visitingRecordArray.actualArrival": { $regex: visitorDate } })
+				.then((returnedVisitorCountFromDb) => {
+					Logs.findOneAndUpdate(
+						{ date: dateToday },
+						{
+							date: dateToday,
+							dom_helpsEntered: returnedCountFromDb,
+							visitorsEntered: returnedVisitorCountFromDb,
+						},
+						{ upsert: true, useFindAndModify: false }
+					)
+						.then(() => {
+							res.render("./admin/stats/home", { error: "", dom_helpsEntered: returnedCountFromDb, visitorsEntered: returnedVisitorCountFromDb });
+						})
+						.catch((err) => {
+							console.log(err);
+							res.render("./admin/stats/home", { error: "Error. Please try again." });
+						});
+				})
+				.catch((err) => {
+					console.log(err);
+					res.render("./admin/stats/home", { error: "Error. Please try again." });
+				});
+		})
+		.catch((err) => {
+			console.log(err);
+			res.render("./admin/stats/home", { error: "Error. Please try again." });
+		});
 });
 // =================================
 // AUTH Routes

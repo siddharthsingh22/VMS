@@ -1,0 +1,48 @@
+<%- include("../../partials/header_admin", {loggedIn : true}) %>
+<div class="container" style="display: flex; flex-direction: column; align-items: center;">
+	<div class="mt-5" style="width: 100%;">
+		<% if(error){ %>
+		<div class="alert alert-danger text-center" role="alert">
+			<%= error %>
+		</div>
+		<% } %>
+	</div>
+
+	<div class="mt-2" style="width: 100%;">
+		<h1 class="display-5 mr-3 text-center" style="font-size: 1.7rem;">Today</h1>
+		<div class="mt-4" style="display: flex; justify-content: center;">
+			<button class="btn btn-primary mr-3 mb-2">
+				Total Domestic Help
+				<div class="badge badge-light ml-2"><%= dom_helpsEntered %></div>
+			</button>
+			<button class="btn btn-warning mr-3 mb-2">
+				Total Entered Visitor
+				<div class="badge badge-light ml-2"><%= visitorsEntered %></div>
+			</button>
+		</div>
+	</div>
+
+	<div class="col-md-8 mt-5" style="display: flex; flex-direction: column; align-items: center;">
+		<h1 class="display-5 mr-3" style="font-size: 1.7rem;">This Month</h1>
+		<div class="mt-3">
+			<button class="btn btn-primary mr-3 mb-2">
+				Total Domestic Help Entries
+				<div class="badge badge-light ml-2"></div>
+			</button>
+			<button class="btn btn-warning mr-3 mb-2">
+				Total Visitor Entries
+				<div class="badge badge-light ml-2">40</div>
+			</button>
+		</div>
+	</div>
+	<div class="col-md-4 border border-secondary mt-5 p-4 rounded" style="display: flex; flex-direction: column; align-items: center;">
+		<h1 class="display-5 mr-3" style="font-size: 1.7rem;">Download Logs</h1>
+		<div class="mt-3">
+			<button class="btn btn-success mr-3 mb-2">
+				Download
+			</button>
+		</div>
+	</div>
+	<a href="/admin" class="btn btn-large btn-info mt-5 col-md-4">Go Back</a>
+</div>
+<%- include("../../partials/footer" )%>
